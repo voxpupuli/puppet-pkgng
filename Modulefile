@@ -1,0 +1,8 @@
+name    'puppet-pkgng'
+version '0.0.1'
+source 'git://github.com/xaque208/puppet-pkgng.git'
+author 'zleslie'
+license 'Apache License Version 2.0'
+summary 'PkgNG package provider for FreeBSD'
+description 'Includes facts and management class.'
+project_page 'https://github.com/xaque208/puppet-pkgng'
