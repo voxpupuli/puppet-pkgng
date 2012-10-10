@@ -20,7 +20,7 @@ class pkgng (
       exec { "pkg update":
         path        => '/usr/local/sbin',
         refreshonly => true,
-        command     => "pkg -q update",
+        command     => "pkg -q update -f",
       }
 
       exec { "convert pkg database to pkgng":
