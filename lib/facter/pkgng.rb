@@ -17,7 +17,7 @@ Facter.add("pkgng_enabled") do
   setcode do
     if File.readlines('/etc/make.conf') =~ /WITH_PKGNG=(yes|true)/
       "true"
-    end
+    end if File.exist?('/etc/make.conf')
   end
 
 end
