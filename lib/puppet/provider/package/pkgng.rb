@@ -10,7 +10,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     inst = Array.new
     package = Hash.new
     cmd = ['info', '-a']
-    pkg_list = pkg(*cmd).to_a
+    pkg_list = pkg(*cmd).lines
 
     pkg_list.each do |pkgs|
       pkgs = pkgs.split

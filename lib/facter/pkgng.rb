@@ -4,7 +4,7 @@ Facter.add("pkgng_supported") do
 
   setcode do
     kernel = Facter.value('kernelrelease')
-    if kernel.grep(/^9|^10/)
+    if kernel.lines.grep(/^9|^10/)
       "true"
     end
   end
@@ -17,7 +17,7 @@ Facter.add("pkgng_enabled") do
   setcode do
     if File.readlines('/etc/make.conf') =~ /WITH_PKGNG=(yes|true)/
       "true"
-    end
+    end if File.exist?('/etc/make.conf')
   end
 
 end
