@@ -4,7 +4,7 @@ Facter.add("pkgng_supported") do
 
   setcode do
     kernel = Facter.value('kernelrelease')
-    if kernel.grep(/^9|^10/)
+    if kernel.lines.grep(/^9|^10/)
       "true"
     end
   end
