@@ -3,36 +3,45 @@ class pkgng (
 ) {
 
   # At the time of this writing, only FreeBSD 9 and 10 are supported by pkgng
-  if $kernel == 'FreeBSD' {
-    if $pkgng_supported {
-      file { "/usr/local/etc/pkg.conf":
-        content  => "PACKAGESITE: ${packgesite}",
-        notify   => Exec['pkg update'],
-      }
+  if $pkgng_supported {
+    file { "/usr/local/etc/pkg.conf":
+      content  => "PACKAGESITE: ${packgesite}",
+      notify   => Exec['pkg update'],
+    }
 
-      cron { "nighty_pkgng_update":
-        command => "/usr/sbin/pkg update -q",
-        minute  => fqdn_rand(60),
-        hour    => 2,
-        require => File["/usr/local/etc/pkg.conf"],
-      }
+    concat::fragment { "pkgng in make.conf.local":
+      target  => '/etc/make.conf.local',
+      content => "WITH_PKGNG=yes\n",
+    }
 
-      exec { "pkg update":
-        path        => '/usr/local/sbin',
-        refreshonly => true,
-        command     => "pkg -q update",
-      }
+    # This is not strictly needed
+    cron { "nighty_pkgng_update":
+      command => "/usr/local/sbin/pkg update -q",
+      minute  => fqdn_rand(60),
+      hour    => 2,
+      require => File["/usr/local/etc/pkg.conf"],
+    }
 
-      exec { "convert pkg database to pkgng":
-        path        => '/usr/local/sbin',
-        refreshonly => true,
-        command     => "pkg2ng",
-      }
-    } else {
-      notice("pkgng is not supported on this release")
+    # Triggered on config changes
+    exec { "pkg update":
+      path        => '/usr/local/sbin',
+      refreshonly => true,
+      command     => "pkg -q update",
+    }
+
+    # This exec should really on ever be run once, and only upon converting to
+    # pkgng.  If you are building up a new system where the only software that
+    # has been installed form ports is the pkgng itself, then the pkg database
+    # is already up to date, and this is not required.  As you will see,
+    # refreshonly, but nothing notifies this.  I am uncertain at this time how
+    # to proceed, other than manually.
+    exec { "convert pkg database to pkgng":
+      path        => '/usr/local/sbin',
+      refreshonly => true,
+      command     => "pkg2ng",
     }
   } else {
-    notice("pkgng is not supported on this platform")
+    notice("pkgng is not supported on this release")
   }
 
 }
