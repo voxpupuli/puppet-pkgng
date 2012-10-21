@@ -26,7 +26,7 @@ class pkgng (
     exec { "pkg update":
       path        => '/usr/local/sbin',
       refreshonly => true,
-      command     => "pkg -q update",
+      command     => "pkg -q update -f",
     }
 
     # This exec should really on ever be run once, and only upon converting to
