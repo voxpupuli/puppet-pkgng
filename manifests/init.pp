@@ -1,11 +1,11 @@
 class pkgng (
-  $packgesite = inline_template("http://pkgbeta.freebsd.org/freebsd-<%= kernelversion.split('.').first %>-${architecture}/latest/")
+  $packagesite = inline_template("http://pkgbeta.freebsd.org/freebsd-<%= kernelversion.split('.').first %>-${architecture}/latest/")
 ) {
 
   # At the time of this writing, only FreeBSD 9 and 10 are supported by pkgng
   if $pkgng_supported {
     file { "/usr/local/etc/pkg.conf":
-      content  => "PACKAGESITE: ${packgesite}",
+      content  => "PACKAGESITE: ${packagesite}",
       notify   => Exec['pkg update'],
     }
 
