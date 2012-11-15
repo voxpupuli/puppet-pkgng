@@ -3,8 +3,8 @@ Facter.add("pkgng_supported") do
   confine :kernel => "FreeBSD"
 
   setcode do
-    kernel = Facter.value('kernelrelease')
-    if kernel.lines.grep(/^9|^10/)
+    kernel = Facter.value('kernelversion')
+    if kernel.to_i >= 9
       "true"
     end
   end
