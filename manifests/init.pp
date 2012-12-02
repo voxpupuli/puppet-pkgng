@@ -1,5 +1,5 @@
 class pkgng (
-  $packagesite = inline_template("http://pkgbeta.freebsd.org/freebsd-<%= kernelversion.split('.').first %>-${architecture}/latest/")
+  $packagesite = inline_template("http://pkgbeta.freebsd.org/freebsd:<%= kernelversion.split('.').first %>:${architecture}/latest/")
 ) {
 
   # At the time of this writing, only FreeBSD 9 and 10 are supported by pkgng
