@@ -1,3 +1,10 @@
+# This configures the PkgNG Package manager on FreeBSD systems, and adds
+# support for managing packages with Puppet.  This will eventually be in
+# mainline FreeBSD, but for now, we are leaving the installation up to the
+# adminstrator, since there is no going back.
+# To install PkgNG, one can simply run the following:
+# make -C /usr/ports/ports-mgmg/pkg install clean
+
 class pkgng (
   $packagesite = inline_template("http://pkgbeta.freebsd.org/freebsd:<%= kernelversion.split('.').first %>:${architecture}/latest/")
 ) {
@@ -18,7 +25,7 @@ class pkgng (
     cron { "nighty_pkgng_update":
       command => "/usr/local/sbin/pkg update -q",
       minute  => fqdn_rand(60),
-      hour    => 2,
+      hour    => fqdn_rand(4),
       require => File["/usr/local/etc/pkg.conf"],
     }
 
