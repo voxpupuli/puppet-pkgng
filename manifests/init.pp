@@ -6,8 +6,12 @@
 # make -C /usr/ports/ports-mgmg/pkg install clean
 
 class pkgng (
-  $packagesite = inline_template("http://pkgbeta.freebsd.org/freebsd:<%= kernelversion.split('.').first %>:${architecture}/latest/")
-) {
+  $packagesite  = $pkgng::params::packagesite,
+  $srv_mirrors  = $pkgng::params::srv_mirrors,
+  $pkg_dbdir    = $pkgng::params::pkg_dbdir,
+  $pkg_cachedir = $pkgng::params::pkg_cachedir,
+  $portsdir     = $pkgng::params::portsdir,
+) inherits pkgng::params {
 
   # At the time of this writing, only FreeBSD 9 and 10 are supported by pkgng
   if $pkgng_supported {
