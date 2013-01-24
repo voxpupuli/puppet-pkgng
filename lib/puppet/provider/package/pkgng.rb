@@ -32,7 +32,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def uninstall
-    cmd = ['remove', @resource[:name]]
+    cmd = ['remove', '-qy', @resource[:name]]
     pkg(*cmd)
   end
 
