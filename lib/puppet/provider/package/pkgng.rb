@@ -27,7 +27,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
 
   def install
     should = @resource.should(:ensure)
-    cmd = ['install', '-qyL', @resource[:name]]
+    cmd = ['install', '-qy', @resource[:name]]
     pkg(*cmd)
   end
 
