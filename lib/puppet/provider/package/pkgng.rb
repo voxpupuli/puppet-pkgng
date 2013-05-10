@@ -5,6 +5,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   commands :pkg => "/usr/local/sbin/pkg"
 
   confine :operatingsystem => :freebsd
+  defaultfor :operatingsystem => :freebsd if $pkgng_enabled
 
   def self.instances
     inst = Array.new
