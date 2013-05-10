@@ -16,6 +16,7 @@ class pkgng (
       notify   => Exec['pkg update'],
     }
 
+    concat { "/etc/make.conf.local": }
     concat::fragment { "pkgng in make.conf.local":
       target  => '/etc/make.conf.local',
       content => "WITH_PKGNG=yes\n",
