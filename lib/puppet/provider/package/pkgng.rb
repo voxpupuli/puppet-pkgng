@@ -8,22 +8,29 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   defaultfor :operatingsystem => :freebsd if $pkgng_enabled
 
   def self.instances
-    inst = Array.new
-    package = Hash.new
-    cmd = ['info', '-a']
-    pkg_list = pkg(*cmd).lines
+    packages = []
+    begin
+      output = pkg(['info','-a'])
 
-    pkg_list.each do |pkgs|
-      pkgs = pkgs.split
-      pkg_info = pkgs[0].split('-')
-      pkg = {
-        :ensure   => pkg_info.pop,
-        :name     => pkg_info.join('-'),
-        :provider => self.name
-      }
-      inst << new(pkg)
+      unless output
+        return packages
+      end
+
+      output.lines.each do |line|
+        pkgs = line.split
+        pkg_info = pkgs[0].split('-')
+        pkg = {
+          :ensure   => pkg_info.pop,
+          :name     => pkg_info.join('-'),
+          :provider => self.name
+        }
+        packages << new(pkg)
+      end
+
+      return packages
+    rescue Puppet::ExecutionFailure
+      nil
     end
-    inst
   end
 
   def install
