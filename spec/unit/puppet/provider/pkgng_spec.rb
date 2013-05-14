@@ -28,6 +28,13 @@ describe provider_class do
       provider_class.expects(:pkg).with(['info','-a']).yields('')
       provider_class.instances.should be_empty
     end
+
+    it "should return all packages when invoked" do
+      fixture = File.read('spec/fixtures/pkg.info')
+      provider_class.expects(:pkg).with(['info','-a']).yields(fixture)
+      provider_class.instances.map(&:name).sort.should ==
+        %w{GeoIP ca_root_nss curl nginx nmap openldap-sasl-client pkg postfix ruby sudo tmux vim-lite zfs-stats zsh}.sort
+    end
   end
 
 end
