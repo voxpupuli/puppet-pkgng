@@ -9,12 +9,15 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
 
   def self.instances
     packages = []
-    inst = []
     begin
-      pkg_list = pkg(['info','-a']).lines
+      output = pkg(['info','-a'])
 
-      pkg_list.each do |pkgs|
-        pkgs = pkgs.split
+      if output == nil
+        return packages
+      end
+
+      output.lines.each do |line|
+        pkgs = line.split
         pkg_info = pkgs[0].split('-')
         pkg = {
           :ensure   => pkg_info.pop,

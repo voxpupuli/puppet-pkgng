@@ -23,6 +23,11 @@ describe provider_class do
       provider_class.expects(:pkg).raises(Puppet::ExecutionFailure, 'wawawa')
       provider_class.instances.should be_nil
     end
+
+    it "should return the empty set if no packages are listed" do
+      provider_class.expects(:pkg).with(['info','-a']).yields('')
+      provider_class.instances.should be_empty
+    end
   end
 
 end
