@@ -12,7 +12,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     begin
       output = pkg(['info','-a'])
 
-      if output == nil
+      unless output
         return packages
       end
 
