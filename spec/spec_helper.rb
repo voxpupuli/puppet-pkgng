@@ -5,9 +5,9 @@ $LOAD_PATH.unshift File.join(dir, 'lib')
 require 'puppet'
 require 'test/unit'
 require 'mocha/setup'
-gem 'rspec'
-
 require 'helpers'
+
+gem 'rspec'
 
 RSpec.configure do |c|
   c.mock_framework = :mocha
