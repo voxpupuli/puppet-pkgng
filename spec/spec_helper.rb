@@ -3,6 +3,7 @@ $LOAD_PATH.unshift File.join(dir, 'lib')
 
 #require 'rspec-puppet'
 require 'puppet'
+require 'test/unit'
 require 'mocha/setup'
 gem 'rspec'
 
