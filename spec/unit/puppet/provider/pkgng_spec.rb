@@ -33,6 +33,13 @@ describe provider_class do
     end
   end
 
+  context "#install" do
+    it "should fail if pkg.conf does not exist" do
+      File.stub(:exist?).with('/usr/local/etc/pkg.conf') { false }
+      expect{ provider.install }.to raise_error(Puppet::Error, /pkg.conf does not exist/)
+    end
+  end
+
   context "#query" do
     it "should return the installed version if present" do
     end

@@ -39,9 +39,11 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def install
-    should = @resource.should(:ensure)
-    cmd = ['install', '-qy', @resource[:name]]
-    pkg(*cmd)
+    if File.exists?('/usr/local/etc/pkg.conf')
+      pkg(['install', '-qy', resource[:name]])
+    else
+      raise Puppet::Error.new("/usr/local/etc/pkg.conf does not exist")
+    end
   end
 
   def uninstall
