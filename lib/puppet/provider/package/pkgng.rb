@@ -7,16 +7,21 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   confine :operatingsystem => :freebsd
   defaultfor :operatingsystem => :freebsd if $pkgng_enabled
 
+
+  def self.get_info
+    pkg(['info','-a'])
+  end
+
   def self.instances
     packages = []
     begin
-      output = pkg(['info','-a'])
+      info = self.get_info
 
-      unless output
+      unless info
         return packages
       end
 
-      output.lines.each do |line|
+      info.lines.each do |line|
         pkgs = line.split
         pkg_info = pkgs[0].split('-')
         pkg = {

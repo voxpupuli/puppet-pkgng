@@ -18,27 +18,18 @@ describe provider_class do
     provider_class.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
   end
 
+
   context "::instances" do
-    #it "should return nil if execution failed" do
-    #  expect(provider_class.command.with(:pkg)).to raise_error
-    #  provider_class.instances.should be_nil
-    #end
+    it "should return the empty set if no packages are listed" do
+      provider_class.stub(:get_info) { '' }
+      provider_class.instances.should be_empty
+    end
 
-    #it "should return the empty set if no packages are listed" do
-    #  provider_class.expects(:pkg).with(['info','-a']).returns('')
-    #  provider_class.instances.should be_empty
-    #end
-
-    #it "should return all packages when invoked" do
-    #  fixture = File.read('spec/fixtures/pkg.info')
-    #  expects(provider_class.pkg.with(['info','-a'])).and_returns(fixture)
-    #  provider_class.instances.map(&:name).sort.should ==
-    #    %w{GeoIP ca_root_nss curl nginx nmap openldap-sasl-client pkg postfix ruby sudo tmux vim-lite zfs-stats zsh}.sort
-    #end
-  end
-
-  context "#install" do
-    it "should fail if pkg.conf is not readable" do
+    it "should return all packages when invoked" do
+      fixture = File.read('spec/fixtures/pkg.info')
+      provider_class.stub(:get_info) { fixture }
+      provider_class.instances.map(&:name).sort.should ==
+        %w{GeoIP ca_root_nss curl nginx nmap openldap-sasl-client pkg postfix ruby sudo tmux vim-lite zfs-stats zsh}.sort
     end
   end
 
