@@ -1,6 +1,9 @@
 Puppet-pkgng
 ===
 
+[![Build Status](https://travis-ci.org/xaque208/puppet-pkgng.png)](https://travis-ci.org/xaque208/puppet-pkgng)
+
+
 A package provider for FreeBSD's PkgNG package manager.
 
 This module contains the provider as well as some implementation around
