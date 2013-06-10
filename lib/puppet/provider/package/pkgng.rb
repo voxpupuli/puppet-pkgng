@@ -51,7 +51,6 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
 
   def query
     hash = Hash.new
-    #cmd = ["query", "'%v'", @resource[:name]]
     cmd = ["info", "-q", @resource[:name]]
     begin
       hash[:ensure] = pkg(*cmd)
