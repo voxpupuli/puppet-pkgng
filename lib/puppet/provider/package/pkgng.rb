@@ -1,6 +1,6 @@
 require 'puppet/provider/package'
 Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package do
-  desc "A PKGng provider for FreeBSD."
+  desc "A PkgNG provider for FreeBSD."
 
   commands :pkg => "/usr/local/sbin/pkg"
 
