@@ -16,8 +16,8 @@ describe provider_class do
 
   before do
     provider_class.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
+    provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
   end
-
 
   context "::instances" do
     it "should return the empty set if no packages are listed" do
@@ -29,7 +29,8 @@ describe provider_class do
       fixture = File.read('spec/fixtures/pkg.info')
       provider_class.stub(:get_info) { fixture }
       provider_class.instances.map(&:name).sort.should ==
-        %w{GeoIP ca_root_nss curl nginx nmap openldap-sasl-client pkg postfix ruby sudo tmux vim-lite zfs-stats zsh}.sort
+        %w{GeoIP ca_root_nss curl nginx nmap openldap-sasl-client
+        pkg postfix ruby sudo tmux vim-lite zfs-stats zsh}.sort
     end
   end
 
@@ -42,11 +43,16 @@ describe provider_class do
 
   context "#query" do
     it "should return the installed version if present" do
+      fixture = File.read('spec/fixtures/pkg.query')
+      provider_class.stub(:get_resource_info) { fixture }
+      resource[:name] = 'zsh'
+      expect(provider.query).to eq({:version=>'5.0.2'})
     end
 
-    it "should return nothing if not present" do
-      #provider.resource[:name] = 'bash'
-      #provider.expects(:pkg).with('zsh').returns('')
+    it "should return nil if not present" do
+      fixture = File.read('spec/fixtures/pkg.query_absent')
+      provider_class.stub(:get_resource_info).with('bash') { fixture }
+      expect(provider.query).to equal(nil)
     end
   end
 

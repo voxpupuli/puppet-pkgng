@@ -1,4 +1,5 @@
 require 'puppet/provider/package'
+
 Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package do
   desc "A PkgNG provider for FreeBSD."
 
@@ -7,9 +8,14 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   confine :operatingsystem => :freebsd
   defaultfor :operatingsystem => :freebsd if $pkgng_enabled
 
+  has_feature :versionable
 
-  def self.get_info
+  def get_info
     pkg(['info','-a'])
+  end
+
+  def self.get_resource_info(name)
+    pkg(['info', '-a', name])
   end
 
   def self.instances
@@ -27,7 +33,8 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
         pkg = {
           :ensure   => pkg_info.pop,
           :name     => pkg_info.join('-'),
-          :provider => self.name
+          :provider => self.name,
+          :version  => pkg_info.last
         }
         packages << new(pkg)
       end
@@ -35,6 +42,15 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
       return packages
     rescue Puppet::ExecutionFailure
       nil
+    end
+  end
+
+  def self.prefetch(resources)
+    packages = instances
+    resources.keys.each do |name|
+      if provider == packages.find{ |pkg| pkg.name == name }
+        resources[name].provider = provider
+      end
     end
   end
 
@@ -47,20 +63,25 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def uninstall
-    cmd = ['remove', '-qy', @resource[:name]]
-    pkg(*cmd)
+    pkg(['remove', '-qy', resource[:name]])
   end
 
   def query
-    hash = Hash.new
-    cmd = ["info", "-q", @resource[:name]]
-    begin
-      hash[:ensure] = pkg(*cmd)
-      hash
-    rescue
-      hash[:ensure] = :purged
-      hash
+    info = self.class.get_resource_info(resource[:name])
+    if info =~ /pkg: No package\(s\) matching/
+      return nil
+    else
+      version = info.split(/ /).first.split('-').last
+      return { :version => version }
     end
+  end
+
+  def version
+    @property_hash[:version]
+  end
+
+  def version=
+    pkg(['install', '-qy', "#{resource[:name]}-#{resource[:version]}"])
   end
 
 end
