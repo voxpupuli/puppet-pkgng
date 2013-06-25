@@ -10,12 +10,8 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
 
   has_feature :versionable
 
-  def get_info
+  def self.get_info
     pkg(['info','-a'])
-  end
-
-  def self.get_resource_info(name)
-    pkg(['info', '-a', name])
   end
 
   def self.instances
@@ -48,7 +44,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   def self.prefetch(resources)
     packages = instances
     resources.keys.each do |name|
-      if provider == packages.find{ |pkg| pkg.name == name }
+      if provider = packages.find{|p| p.name == name }
         resources[name].provider = provider
       end
     end
@@ -67,11 +63,10 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def query
-    info = self.class.get_resource_info(resource[:name])
-    if info =~ /pkg: No package\(s\) matching/
+    if @property_hash[:ensure] == nil
       return nil
     else
-      version = info.split(/ /).first.split('-').last
+      version = @property_hash[:version]
       return { :version => version }
     end
   end
