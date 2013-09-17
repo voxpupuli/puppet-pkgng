@@ -11,7 +11,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   has_feature :versionable
 
   def self.get_info
-    pkg(['info','-a'])
+    pkg(['info','-ao'])
   end
 
   def self.instances
@@ -24,13 +24,16 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
       end
 
       info.lines.each do |line|
-        pkgs = line.split
-        pkg_info = pkgs[0].split('-')
+        package, origin = line.split
+        pkg_info = package.split('-')
+        version = pkg_info.pop
+        name = pkg_info.join('-')
         pkg = {
-          :ensure   => pkg_info.pop,
-          :name     => pkg_info.join('-'),
+          :ensure   => :present,
+          :name     => name,
           :provider => self.name,
-          :version  => pkg_info.last
+          :version  => version,
+          :origin   => origin
         }
         packages << new(pkg)
       end
@@ -44,7 +47,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   def self.prefetch(resources)
     packages = instances
     resources.keys.each do |name|
-      if provider = packages.find{|p| p.name == name }
+      if provider = packages.find{|p| p.name == name or p.origin == name }
         resources[name].provider = provider
       end
     end
@@ -63,6 +66,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def query
+    debug @property_hash
     if @property_hash[:ensure] == nil
       return nil
     else
@@ -72,11 +76,17 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def version
+    debug @property_hash[:version]
     @property_hash[:version]
   end
 
   def version=
     pkg(['install', '-qy', "#{resource[:name]}-#{resource[:version]}"])
+  end
+
+  def origin
+    debug @property_hash[:origin]
+    @property_hash[:origin]
   end
 
 end
