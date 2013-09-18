@@ -1,4 +1,4 @@
-name    'puppet-pkgng'
+name    'zleslie-pkgng'
 version '0.0.6'
 source 'git://github.com/xaque208/puppet-pkgng.git'
 author 'zleslie'
