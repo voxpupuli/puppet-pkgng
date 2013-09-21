@@ -20,18 +20,9 @@ class pkgng (
       notify   => Exec['pkg update'],
     }
 
-    concat { "/etc/make.conf.local": }
-    concat::fragment { "pkgng in make.conf.local":
-      target  => '/etc/make.conf.local',
-      content => "WITH_PKGNG=yes\n",
-    }
-
-    # This is not strictly needed
-    cron { "nighty_pkgng_update":
-      command => "/usr/local/sbin/pkg update -q",
-      minute  => fqdn_rand(60),
-      hour    => fqdn_rand(4),
-      require => File["/usr/local/etc/pkg.conf"],
+    file_line { "WITH_PKGNG":
+      path => '/etc/make.conf',
+      line => 'WITH_PKGNG=yes\n',
     }
 
     # Triggered on config changes
@@ -55,5 +46,4 @@ class pkgng (
   } else {
     notice("pkgng is not supported on this release")
   }
-
 }
