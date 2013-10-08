@@ -22,7 +22,7 @@ class pkgng (
 
     file_line { "WITH_PKGNG":
       path => '/etc/make.conf',
-      line => 'WITH_PKGNG=yes\n',
+      line => "WITH_PKGNG=yes\n",
     }
 
     # Triggered on config changes
