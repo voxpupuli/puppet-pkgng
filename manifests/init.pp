@@ -25,8 +25,8 @@ class pkgng (
     }
 
     file_line { "WITH_PKGNG":
-      path => '/etc/make.conf',
-      line => "WITH_PKGNG=yes\n",
+      path    => '/etc/make.conf',
+      line    => "WITH_PKGNG=yes\n",
       require => File['/etc/make.conf'],
     }
 
