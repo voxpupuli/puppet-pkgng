@@ -20,9 +20,14 @@ class pkgng (
       notify   => Exec['pkg update'],
     }
 
+    file { "/etc/make.conf":
+      ensure => present,
+    }
+
     file_line { "WITH_PKGNG":
-      path => '/etc/make.conf',
-      line => 'WITH_PKGNG=yes\n',
+      path    => '/etc/make.conf',
+      line    => "WITH_PKGNG=yes\n",
+      require => File['/etc/make.conf'],
     }
 
     # Triggered on config changes
