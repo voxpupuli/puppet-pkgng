@@ -1,5 +1,5 @@
 class pkgng::params {
-  $packagesite  = inline_template("http://pkgbeta.freebsd.org/freebsd:<%= @kernelversion.split('.').first %>:${architecture}/latest/")
+  $packagesite  = 'http://pkg.FreeBSD.org/${ABI}/latest'
   $srv_mirrors  = 'NO'
   $pkg_dbdir    = '/var/db/pkg'
   $pkg_cachedir = '/var/cache/pkg'

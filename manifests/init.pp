@@ -16,7 +16,7 @@ class pkgng (
   # At the time of this writing, only FreeBSD 9 and 10 are supported by pkgng
   if $pkgng_supported {
     file { "/usr/local/etc/pkg.conf":
-      content  => "PACKAGESITE: ${packagesite}",
+      content  => "PACKAGESITE: ${packagesite}\n",
       notify   => Exec['pkg update'],
     }
 
