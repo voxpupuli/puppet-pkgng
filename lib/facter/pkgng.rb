@@ -15,9 +15,9 @@ Facter.add("pkgng_enabled") do
   confine :kernel => "FreeBSD"
 
   setcode do
-    if %x{/usr/bin/make -f /etc/make.conf -VWITH_PKGNG} =~ /(yes|true)/i
+    if system("TMPDIR=/dev/null ASSUME_ALWAYS_YES=1 PACKAGESITE=file:///nonexistent pkg info pkg >/dev/null 2>&1")
       "true"
-    end if File.exist?('/etc/make.conf')
+    end
   end
 
 end
