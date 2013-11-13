@@ -17,11 +17,9 @@ The easiest way to install is to install from the forge.
 
     puppet module install xaque208/pkgng
 
-Then to configure your system to use a PkgNG, use something like the following.
+Then to configure your system to use a PkgNG, a simple include will do.
 
-    class { "pkgng":
-      packagesite => 'http://build.example.com/90amd64-default';
-    }
+    include pkgng
 
 You can also clone this repo to somewhere in your modulepath, or use something
 like [r10k](https://github.com/adrienthebo/r10k) to deploy your modules.  R10k
