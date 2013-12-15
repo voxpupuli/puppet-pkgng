@@ -7,6 +7,7 @@
 
 class pkgng (
   $packagesite  = $pkgng::params::packagesite,
+  $repo_name    = $pkgng::params::repo_name,
   $srv_mirrors  = $pkgng::params::srv_mirrors,
   $pkg_dbdir    = $pkgng::params::pkg_dbdir,
   $pkg_cachedir = $pkgng::params::pkg_cachedir,
@@ -15,9 +16,41 @@ class pkgng (
 
   # At the time of this writing, only FreeBSD 9 and 10 are supported by pkgng
   if $pkgng_supported {
+    $config_content = "PKG_DBDIR: ${pkg_dbdir}\nPKG_CACHEDIR: ${pkg_cachedir}\n"
+
+    if $srv_mirrors == "YES" or $packagesite =~ /^pkg\+http/ {
+      $mirror_type = "SRV"
+    } else {
+      $mirror_type = "HTTP"
+    }
+
     file { "/usr/local/etc/pkg.conf":
-      content  => "PACKAGESITE: ${packagesite}\n",
-      notify   => Exec['pkg update'],
+      notify => Exec['pkg update'],
+    }
+
+    # from pkgng 1.1.4 and up, a different repo format is used
+    if versioncmp($pkgng_version, "1.1.4") >= 0 {
+      # make sure repo config dir is present
+      file { "/usr/local/etc/pkg":
+        ensure => directory,
+      }
+
+      file { "/usr/local/etc/pkg/repos/":
+        ensure => directory,
+      }
+
+      File["/usr/local/etc/pkg.conf"] {
+        content => "${config_content}"
+      }
+
+      file { "/usr/local/etc/pkg/repos/${repo_name}.conf":
+        content => "${repo_name}: {\n  url: ${$packagesite},\n  mirror_type: ${mirror_type},\n  enabled: true,\n}",
+        notify  => Exec['pkg update'],
+      }
+    } else {
+      File["/usr/local/etc/pkg.conf"] {
+        content => "PACKAGESITE: ${packagesite}\n${config_content}",
+      }
     }
 
     file { "/etc/make.conf":
