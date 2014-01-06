@@ -15,7 +15,7 @@ module](https://github.com/xaque208/puppet-poudriere).
 
 The easiest way to install is to install from the forge.
 
-    puppet module install xaque208/pkgng
+    puppet module install zleslie/pkgng
 
 Then to configure your system to use a PkgNG, a simple include will do.
 
