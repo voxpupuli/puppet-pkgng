@@ -9,9 +9,24 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   defaultfor :operatingsystem => :freebsd # if $pkgng_enabled
 
   has_feature :versionable
+  has_feature :upgradeable
 
   def self.get_info
-    pkg(['info','-ao'])
+    @pkg_info = @pkg_info || pkg(['info','-ao'])
+    @pkg_info
+  end
+
+  def self.get_version_list
+    @version_list = @version_list || pkg(['version', '-voRL='])
+    @version_list
+  end
+
+  def self.get_latest_version(origin)
+    if latest_version = self.get_version_list.lines.find { |l| l =~ /^#{origin}/ }
+      latest_version = latest_version.split(' ').last.split(')').first
+      return latest_version
+    end
+    nil
   end
 
   def self.instances
@@ -24,16 +39,24 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
       end
 
       info.lines.each do |line|
+        unless line =~ /\w+-\d.*\s*\w\/\w.*/
+          debug "skipping line: #{line}"
+          next
+        end
+
         package, origin = line.split
-        pkg_info = package.split('-')
-        version = pkg_info.pop
-        name = pkg_info.join('-')
+        pkg_info        = package.split('-')
+        version         = pkg_info.pop
+        name            = pkg_info.join('-')
+        latest_version  = get_latest_version(origin) || version
+
         pkg = {
-          :ensure   => :present,
+          :ensure   => version,
           :name     => name,
           :provider => self.name,
+          :origin   => origin,
           :version  => version,
-          :origin   => origin
+          :latest   => latest_version
         }
         packages << new(pkg)
       end
@@ -76,7 +99,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def version
-    debug @property_hash[:version]
+    debug @property_hash[:version].inspect
     @property_hash[:version]
   end
 
@@ -85,8 +108,20 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def origin
-    debug @property_hash[:origin]
+    debug @property_hash[:origin].inspect
     @property_hash[:origin]
+  end
+
+  # Upgrade to the latest version
+  def update
+    debug 'pkgng: update called'
+    install
+  end
+
+  # Returnthe latest version of the package
+  def latest
+    debug "returning the latest #{@property_hash[:name].inspect} version #{@property_hash[:latest].inspect}"
+    @property_hash[:latest]
   end
 
 end

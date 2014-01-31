@@ -1,5 +1,6 @@
 class pkgng::params {
-  $packagesite  = 'http://pkg.FreeBSD.org/${ABI}/latest'
+  $repo_name    = "FreeBSD"
+  $packagesite  = 'pkg+http://pkg.FreeBSD.org/${ABI}/latest'
   $srv_mirrors  = 'NO'
   $pkg_dbdir    = '/var/db/pkg'
   $pkg_cachedir = '/var/cache/pkg'

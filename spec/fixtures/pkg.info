@@ -1,14 +1,12 @@
-GeoIP-1.4.8_3                  Find the country that any IP address or hostname originates from
-ca_root_nss-3.14.3             The root certificate bundle from the Mozilla Project
-curl-7.24.0_2                  Non-interactive tool to get files from FTP, GOPHER, HTTP(S) servers
-nginx-1.4.1,1                  Robust and small WWW server
-nmap-6.25_1                    Port scanning utility for large networks
-openldap-sasl-client-2.4.35    Open source LDAP client implementation with SASL2 support
-pkg-1.0.12                     New generation package manager
-postfix-2.10.0,1               Secure alternative to widely-used Sendmail
-ruby-1.9.3.392,1               An object-oriented interpreted scripting language
-sudo-1.8.6.p8                  Allow others to run commands as root
-tmux-1.8                       A Terminal Multiplexer
-vim-lite-7.3.669_2             Vi "workalike", with many additional features (Lite package)
-zfs-stats-1.2.2                Display human-readable ZFS statistics
-zsh-5.0.2                      The Z shell
+====== BEGIN pkg.conf ======
+"PACKAGESITE": "http://pkgbeta.freebsd.org/freebsd:9:amd64/latest/"
+
+====== END pkg.conf ======
+pkg: PACKAGESITE in pkg.conf is deprecated. Please create a repository configuration file
+ca_root_nss-3.15.3.1           security/ca_root_nss
+curl-7.33.0                    ftp/curl
+gnupg-2.0.22                   security/gnupg
+mcollective-2.2.4              sysutils/mcollective
+nmap-6.40                      security/nmap
+pkg-1.2.4_1                    ports-mgmt/pkg
+zsh-5.0.2_1                    shells/zsh
