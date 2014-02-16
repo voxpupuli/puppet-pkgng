@@ -21,6 +21,11 @@ Then to configure your system to use a PkgNG, a simple include will do.
 
     include pkgng
 
+or when you want to use specific PkgNG repositories:
+
+    pkgng::repo { 'pkg.freebsd.org': }
+    pkgng::repo { 'my.own.repo': }
+
 ### Installation via r10K
 
 You can also clone this repo to somewhere in your modulepath, or use something
