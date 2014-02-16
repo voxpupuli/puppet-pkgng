@@ -12,7 +12,7 @@ class pkgng (
   $repos        = {},
 ) inherits pkgng::params {
 
-  # At the time of this writing, only FreeBSD 9 and up are supported by pkgng
+  # PkgNG versions before 1.1.4 use another method of defining repositories
   if ! $pkgng_supported or versioncmp($pkgng_version, "1.1.4") < 0 {
     fail("PKGng is either not supported on your system or it is too old")
   }
