@@ -76,12 +76,34 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     end
   end
 
-  def install
-    if File.exists?('/usr/local/etc/pkg.conf')
-      pkg(['install', '-qy', resource[:name]])
-    else
-      raise Puppet::Error.new("/usr/local/etc/pkg.conf does not exist")
+  def repo_tag_from_urn(urn)
+    # extract repo tag from URN: urn:freebsd:repo:<tag>
+    schema = ['urn', 'freebsd', 'repo', nil]
+    validation = schema.zip(urn.split(':'))
+    result = validation.map do |should, actual|
+      if should.nil?
+        value = actual
+      else
+        raise ArgumentError source.inspect unless should == actual
+        value = nil
+      end
+      value
     end
+    result.compact.first
+  end
+
+  def install
+    source = resource[:source]
+    source = URI(source) unless source.nil?
+    if not source # install using default repo logic
+      args = ['install', '-qy', resource[:name]]
+    elsif source.scheme == 'urn' # install from repo named in URN
+      tag = repo_tag_from_urn(source.to_s)
+      args = ['install', '-qy', '-r', tag, resource[:name]]
+    else # add package located at URL
+      args = ['add', '-q', source.to_s]
+    end
+    pkg(args)
   end
 
   def uninstall
