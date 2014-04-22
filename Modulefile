@@ -1,5 +1,5 @@
 name    'zleslie-pkgng'
-version '0.2.0'
+version '0.2.1'
 source 'git://github.com/xaque208/puppet-pkgng.git'
 author 'zleslie'
 license 'Apache License Version 2.0'
