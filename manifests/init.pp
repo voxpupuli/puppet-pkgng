@@ -6,10 +6,11 @@
 # make -C /usr/ports/ports-mgmg/pkg install clean
 
 class pkgng (
-  $pkg_dbdir    = $pkgng::params::pkg_dbdir,
-  $pkg_cachedir = $pkgng::params::pkg_cachedir,
-  $portsdir     = $pkgng::params::portsdir,
-  $repos        = {},
+  $pkg_dbdir     = $pkgng::params::pkg_dbdir,
+  $pkg_cachedir  = $pkgng::params::pkg_cachedir,
+  $portsdir      = $pkgng::params::portsdir,
+  $purge_repos_d = false,
+  $repos         = {},
 ) inherits pkgng::params {
 
   # PkgNG versions before 1.1.4 use another method of defining repositories
@@ -17,13 +18,24 @@ class pkgng (
     fail("PKGng is either not supported on your system or it is too old")
   }
 
-  file { "/usr/local/etc/pkg.conf":
+  file { '/usr/local/etc/pkg.conf':
     content => "PKG_DBDIR: ${pkg_dbdir}\nPKG_CACHEDIR: ${pkg_cachedir}\nPORTSDIR: ${portsdir}\n",
     notify  => Exec['pkg update'],
   }
 
   # make sure repo config dir is present
-  file { ['/usr/local/etc/pkg', '/usr/local/etc/pkg/repos']:
+  file { '/usr/local/etc/pkg':
+    ensure => directory,
+  }
+
+  if $purge_repos_d == true or $purge_repos_d == 'true' {
+    File['/usr/local/etc/pkg/repos'] {
+      recurse => true,
+      purge   => true,
+    }
+  }
+
+  file { '/usr/local/etc/pkg/repos':
     ensure => directory,
   }
 
