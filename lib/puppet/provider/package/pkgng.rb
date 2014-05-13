@@ -102,7 +102,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
 
     # Ensure we handle the version
     if resource[:version]
-      installname = resource[:name] + '-' + resource[:ensure]
+      installname = resource[:name] + '-' + resource[:version]
     else
       installname = resource[:name]
     end
@@ -142,11 +142,13 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def origin
+    debug @property_hash[:origin].inspect
     @property_hash[:origin]
   end
 
   # Upgrade to the latest version
   def update
+    debug 'pkgng: update called'
     install
   end
 
