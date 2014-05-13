@@ -99,11 +99,21 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   def install
     source = resource[:source]
     source = URI(source) unless source.nil?
+
+    # Ensure we handle the version
+    if resource[:ensure] =~ /\./
+      installname = resource[:name] + '-' + resource[:ensure]
+    else
+      installname = resource[:name]
+    end
+
+    puts installname
+
     if not source # install using default repo logic
-      args = ['install', '-qy', resource[:name]]
+      args = ['install', '-qy', installname]
     elsif source.scheme == 'urn' # install from repo named in URN
       tag = repo_tag_from_urn(source.to_s)
-      args = ['install', '-qy', '-r', tag, resource[:name]]
+      args = ['install', '-qy', '-r', tag, installname]
     else # add package located at URL
       args = ['add', '-q', source.to_s]
     end
