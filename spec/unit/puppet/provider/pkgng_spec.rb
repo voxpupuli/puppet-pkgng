@@ -36,8 +36,8 @@ describe provider_class do
   end
 
   before do
-    provider_class.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
-    provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
+    provider_class.stub(:command).with(:pkg) { '/usr/local/sbin/pkg' }
+    #provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
 
     info = File.read('spec/fixtures/pkg.info')
     provider_class.stub(:get_info) { info }
@@ -46,7 +46,7 @@ describe provider_class do
     provider_class.stub(:get_version_list) { version_list }
   end
 
-  context "::instances" do
+  context "#instances" do
     it "should return the empty set if no packages are listed" do
       provider_class.stub(:get_info) { '' }
       provider_class.stub(:get_version_list) { '' }
@@ -73,10 +73,21 @@ describe provider_class do
   end
 
   context "#install" do
-    it "should fail if pkg.conf does not exist" do
-      File.stub(:exist?).with('/usr/local/etc/pkg.conf') { false }
-      expect{ provider.install }.to raise_error(Puppet::Error, /pkg.conf does not exist/)
+    it "should call pkg with the specified package version" do
+      resource = Puppet::Type.type(:package).new(
+        :name     => 'curl',
+        :provider => pkgng,
+        :ensure   => '7.33.1'
+      )
+      provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
+      resource.provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
+      resource.provider.install
+      expect { resource.provider.install }.should_receive(:pkg)
     end
+    #it "should fail if pkg.conf does not exist" do
+    #  File.stub(:exist?).with('/usr/local/etc/pkg.conf') { false }
+    #  expect{ provider.install }.to raise_error(Puppet::Error, /pkg.conf does not exist/)
+    #end
   end
 
   context "#query" do
@@ -115,7 +126,6 @@ describe provider_class do
         :provider => pkgng,
         :ensure   => :latest
       )
-
 
       resource.provider.should_receive(:update)
 

@@ -101,11 +101,13 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     source = URI(source) unless source.nil?
 
     # Ensure we handle the version
-    if resource[:version]
-      installname = resource[:name] + '-' + resource[:version]
+    if resource[:ensure] =~ /\./
+      installname = resource[:name] + '-' + resource[:ensure]
     else
       installname = resource[:name]
     end
+
+    puts installname
 
     if not source # install using default repo logic
       args = ['install', '-qy', installname]
