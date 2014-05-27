@@ -6,7 +6,11 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   commands :pkg => "/usr/local/sbin/pkg"
 
   confine :operatingsystem => :freebsd
-  defaultfor :operatingsystem => :freebsd if $pkgng_enabled
+  confine :pkgng_enabled => :true
+  
+  defaultfor :operatingsystem => :freebsd
+  defaultfor :pkgng_enabled => :true
+  
 
   has_feature :versionable
   has_feature :upgradeable
