@@ -2,14 +2,18 @@
 # support for managing packages with Puppet.  This will eventually be in
 # mainline FreeBSD, but for now, we are leaving the installation up to the
 # adminstrator, since there is no going back.
+#
+# If you have purge_repos_d as true - then you'll have no repositories
+# defined unless you define one. You want to do this as you'll want this
+# module to control repos anyway.
+#
 # To install PkgNG, one can simply run the following:
 # make -C /usr/ports/ports-mgmg/pkg install clean
-
 class pkgng (
   $pkg_dbdir     = $pkgng::params::pkg_dbdir,
   $pkg_cachedir  = $pkgng::params::pkg_cachedir,
   $portsdir      = $pkgng::params::portsdir,
-  $purge_repos_d = false,
+  $purge_repos_d = true,
   $repos         = {},
 ) inherits pkgng::params {
 
@@ -35,6 +39,13 @@ class pkgng (
     File['/usr/local/etc/pkg/repos'] {
       recurse => true,
       purge   => true,
+    }
+
+    file { '/etc/pkg':
+      ensure  => directory,
+      purge   => true,
+      recurse => true,
+      before  => Exec['pkg update']
     }
   }
 
