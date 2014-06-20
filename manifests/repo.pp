@@ -32,7 +32,7 @@ define pkgng::repo (
 
   # define repository configuration
   file { "/usr/local/etc/pkg/repos/${name}.conf":
-    ensure  => $ensure,
+    #ensure  => $ensure,
     content => template("${module_name}/repo.erb"),
     notify  => Exec['pkg update'],
   }

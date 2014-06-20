@@ -14,9 +14,12 @@ class pkgng (
 ) inherits pkgng::params {
 
   # PkgNG versions before 1.1.4 use another method of defining repositories
-  if ! $pkgng_supported or versioncmp($pkgng_version, "1.1.4") < 0 {
-    fail("PKGng is either not supported on your system or it is too old")
+  if ! $::pkgng_supported or versioncmp($::pkgng_version, '1.1.4') < 0 {
+    fail('PKGng is either not supported on your system or it is too old')
   }
+
+  # Validate $purge_repos_d boolean
+  validate_bool($purge_repos_d)
 
   file { '/usr/local/etc/pkg.conf':
     content => "PKG_DBDIR: ${pkg_dbdir}\nPKG_CACHEDIR: ${pkg_cachedir}\nPORTSDIR: ${portsdir}\n",
@@ -28,7 +31,7 @@ class pkgng (
     ensure => directory,
   }
 
-  if $purge_repos_d == true or $purge_repos_d == 'true' {
+  if $purge_repos_d == true {
     File['/usr/local/etc/pkg/repos'] {
       recurse => true,
       purge   => true,
