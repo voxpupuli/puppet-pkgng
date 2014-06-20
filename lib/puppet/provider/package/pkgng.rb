@@ -15,7 +15,14 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     return nil
   end
 
-  commands :pkg => which('pkg')
+  # The sensible default for pkg is /usr/local/sbin/pkg, however It can be
+  # in other $PATH locations, such as a local $PATH var for a user.
+  # Default to the /usr/local/sbin/pkg binary, otherwise search $PATH
+  if File.exists('/usr/local/sbin/pkg') and File.executable('/usr/local/sbin/pkg')
+    commands :pkg => '/usr/local/sbin/pkg'
+  else
+    commands :pkg => which('pkg')
+  end
 
   confine :operatingsystem => :freebsd
   confine :pkgng_enabled => :true
