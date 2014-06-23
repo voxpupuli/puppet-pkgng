@@ -13,9 +13,11 @@ class pkgng (
   $repos         = {},
 ) inherits pkgng::params {
 
+  validate_boolean($purge_repos_d)
+
   # PkgNG versions before 1.1.4 use another method of defining repositories
-  if ! $pkgng_supported or versioncmp($pkgng_version, "1.1.4") < 0 {
-    fail("PKGng is either not supported on your system or it is too old")
+  if ! $::pkgng_supported or versioncmp($::pkgng_version, '1.1.4') < 0 {
+    fail('PKGng is either not supported on your system or it is too old')
   }
 
   file { '/usr/local/etc/pkg.conf':
@@ -28,7 +30,7 @@ class pkgng (
     ensure => directory,
   }
 
-  if $purge_repos_d == true or $purge_repos_d == 'true' {
+  if $purge_repos_d {
     File['/usr/local/etc/pkg/repos'] {
       recurse => true,
       purge   => true,

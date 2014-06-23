@@ -1,3 +1,4 @@
+#
 
 Facter.add("pkgng_supported") do
   confine :kernel => "FreeBSD"
@@ -8,7 +9,6 @@ Facter.add("pkgng_supported") do
       "true"
     end
   end
-
 end
 
 Facter.add("pkgng_enabled") do
@@ -19,7 +19,6 @@ Facter.add("pkgng_enabled") do
       "true"
     end
   end
-
 end
 
 Facter.add("pkgng_version") do
@@ -30,5 +29,4 @@ Facter.add("pkgng_version") do
       Facter::Util::Resolution.exec("pkg query %v pkg 2>/dev/null")
     end
   end
-
 end
