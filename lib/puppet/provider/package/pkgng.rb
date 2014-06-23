@@ -3,12 +3,14 @@ require 'puppet/provider/package'
 Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package do
   desc "A PkgNG provider for FreeBSD."
 
-  # Add PATH and PATHEXT detection for pkg binary instead of hard coding a path
+  # Add PATH and LOCALBASE detection for pkg binary instead of hard coding a path
   def which(cmd)
-    exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+    exts = ENV['LOCALBASE'] ? ENV['LOCALBASE'].split(';') : ['']
     ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
       exts.each { |ext|
-        exe = File.join(path, "#{cmd}#{ext}")
+        loc = "#{ext}/sbin/#{cmd}"
+        return loc if File.executable? loc
+        exe = File.join(path, "#{cmd}")
         return exe if File.executable? exe
       }
     end
@@ -16,8 +18,9 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   # The sensible default for pkg is /usr/local/sbin/pkg, however It can be
-  # in other $PATH locations, such as a local $PATH var for a user.
-  # Default to the /usr/local/sbin/pkg binary, otherwise search $PATH
+  # in other $PATH locations, such as a local PATH for a user. Also a local
+  # compile will set LOCALBASE env var, which we should prefer if present.
+  # Default to /usr/local/sbin/pkg binary, otherwise search PATH and LOCALBASE
   if File.executable?('/usr/local/sbin/pkg')
     commands :pkg => '/usr/local/sbin/pkg'
   else
