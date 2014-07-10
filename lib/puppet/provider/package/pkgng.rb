@@ -1,11 +1,11 @@
 require 'puppet/provider/package'
 
 Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package do
-  desc "A PkgNG provider for FreeBSD."
+  desc "A PkgNG provider for FreeBSD and DragonFly."
 
   commands :pkg => "/usr/local/sbin/pkg"
 
-  confine :operatingsystem => :freebsd
+  confine :operatingsystem => [:freebsd, :dragonfly]
   confine :pkgng_enabled => :true
   
   defaultfor :operatingsystem => :freebsd
