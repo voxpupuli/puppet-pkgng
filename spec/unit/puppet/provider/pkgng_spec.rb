@@ -40,7 +40,7 @@ describe provider_class do
     #provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
 
     info = File.read('spec/fixtures/pkg.info')
-    provider_class.stub(:get_info) { info }
+    provider_class.stub(:get_query) { info }
 
     version_list = File.read('spec/fixtures/pkg.version')
     provider_class.stub(:get_version_list) { version_list }
@@ -48,14 +48,14 @@ describe provider_class do
 
   context "#instances" do
     it "should return the empty set if no packages are listed" do
-      provider_class.stub(:get_info) { '' }
+      provider_class.stub(:get_query) { '' }
       provider_class.stub(:get_version_list) { '' }
       provider_class.instances.should be_empty
     end
 
     it "should return all packages when invoked" do
       provider_class.instances.map(&:name).sort.should ==
-        %w{ca_root_nss curl nmap pkg gnupg mcollective zsh}.sort
+        %w{ca_root_nss curl nmap pkg gnupg mcollective zsh tac_plus}.sort
     end
 
     it "should set latest to current version when no upgrade available" do
