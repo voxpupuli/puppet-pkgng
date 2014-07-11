@@ -7,17 +7,17 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
 
   confine :operatingsystem => [:freebsd, :dragonfly]
   confine :pkgng_enabled => :true
-  
+
   defaultfor :operatingsystem => :freebsd
   defaultfor :pkgng_enabled => :true
-  
+
 
   has_feature :versionable
   has_feature :upgradeable
 
-  def self.get_info
-    @pkg_info = @pkg_info || pkg(['info','-ao'])
-    @pkg_info
+  def self.get_query
+    @pkg_query = @pkg_query || pkg(['query','-a "%n %v %o"'])
+    @pkg_query
   end
 
   def self.get_version_list
@@ -36,22 +36,15 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   def self.instances
     packages = []
     begin
-      info = self.get_info
+      info = self.get_query
 
       unless info
         return packages
       end
 
       info.lines.each do |line|
-        unless line =~ /\w+-\d.*\s*\w\/\w.*/
-          debug "skipping line: #{line}"
-          next
-        end
 
-        package, origin = line.split
-        pkg_info        = package.split('-')
-        version         = pkg_info.pop
-        name            = pkg_info.join('-')
+        name, version, origin = line.chomp.split(" ", 3)
         latest_version  = get_latest_version(origin) || version
 
         pkg = {
