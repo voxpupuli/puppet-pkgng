@@ -41,7 +41,7 @@ Facter.add("pkgng_version") do
   confine :kernel => ["FreeBSD", "DragonFly"]
 
   setcode do
-    if Facter.value('pkgng_enabled') == "true"
+    if system("TMPDIR=/dev/null ASSUME_ALWAYS_YES=1 PACKAGESITE=file:///nonexistent pkg info pkg >/dev/null 2>&1")
       Facter::Util::Resolution.exec("pkg -v 2>/dev/null")
     end
   end
