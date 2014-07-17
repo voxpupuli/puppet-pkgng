@@ -16,7 +16,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   has_feature :upgradeable
 
   def self.get_query
-    @pkg_query = @pkg_query || pkg(['query','-a "%n %v %o"'])
+    @pkg_query = @pkg_query || pkg(['query', '-a', '%n %v %o'])
     @pkg_query
   end
 
