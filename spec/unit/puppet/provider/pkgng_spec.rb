@@ -36,26 +36,26 @@ describe provider_class do
   end
 
   before do
-    provider_class.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
-    provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
+    provider_class.stub(:command).with(:pkg) { '/usr/local/sbin/pkg' }
+    #provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
 
     info = File.read('spec/fixtures/pkg.info')
-    provider_class.stub(:get_info) { info }
+    provider_class.stub(:get_query) { info }
 
     version_list = File.read('spec/fixtures/pkg.version')
     provider_class.stub(:get_version_list) { version_list }
   end
 
-  context "::instances" do
+  context "#instances" do
     it "should return the empty set if no packages are listed" do
-      provider_class.stub(:get_info) { '' }
+      provider_class.stub(:get_query) { '' }
       provider_class.stub(:get_version_list) { '' }
       provider_class.instances.should be_empty
     end
 
     it "should return all packages when invoked" do
       provider_class.instances.map(&:name).sort.should ==
-        %w{ca_root_nss curl nmap pkg gnupg mcollective zsh}.sort
+        %w{ca_root_nss curl nmap pkg gnupg mcollective zsh tac_plus}.sort
     end
 
     it "should set latest to current version when no upgrade available" do
@@ -73,9 +73,16 @@ describe provider_class do
   end
 
   context "#install" do
-    it "should fail if pkg.conf does not exist" do
-      File.stub(:exist?).with('/usr/local/etc/pkg.conf') { false }
-      expect{ provider.install }.to raise_error(Puppet::Error, /pkg.conf does not exist/)
+    it "should call pkg with the specified package version" do
+      resource = Puppet::Type.type(:package).new(
+        :name     => 'curl',
+        :provider => :pkgng,
+        :ensure   => '7.33.1'
+      )
+      resource.provider.should_receive(:pkg) do |arg|
+        arg.should include('curl-7.33.1')
+      end
+      resource.provider.install
     end
   end
 
@@ -115,7 +122,6 @@ describe provider_class do
         :provider => pkgng,
         :ensure   => :latest
       )
-
 
       resource.provider.should_receive(:update)
 
