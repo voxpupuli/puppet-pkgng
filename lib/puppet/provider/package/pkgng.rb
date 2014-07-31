@@ -100,8 +100,6 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
       installname = resource[:name]
     end
 
-    puts installname
-
     if not source # install using default repo logic
       args = ['install', '-qy', installname]
     elsif source.scheme == 'urn' # install from repo named in URN

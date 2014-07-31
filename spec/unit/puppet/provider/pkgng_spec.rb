@@ -76,18 +76,14 @@ describe provider_class do
     it "should call pkg with the specified package version" do
       resource = Puppet::Type.type(:package).new(
         :name     => 'curl',
-        :provider => pkgng,
+        :provider => :pkgng,
         :ensure   => '7.33.1'
       )
-      provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
-      resource.provider.stub(:command).with(:pkg) {'/usr/local/sbin/pkg'}
+      resource.provider.should_receive(:pkg) do |arg|
+        arg.should include('curl-7.33.1')
+      end
       resource.provider.install
-      expect { resource.provider.install }.should_receive(:pkg)
     end
-    #it "should fail if pkg.conf does not exist" do
-    #  File.stub(:exist?).with('/usr/local/etc/pkg.conf') { false }
-    #  expect{ provider.install }.to raise_error(Puppet::Error, /pkg.conf does not exist/)
-    #end
   end
 
   context "#query" do
