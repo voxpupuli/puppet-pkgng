@@ -3,7 +3,29 @@ require 'puppet/provider/package'
 Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package do
   desc "A PkgNG provider for FreeBSD and DragonFly."
 
-  commands :pkg => "/usr/local/sbin/pkg"
+  # Add PATH and LOCALBASE detection for pkg binary instead of hard coding a path
+  def which(cmd)
+    exts = ENV['LOCALBASE'] ? ENV['LOCALBASE'].split(';') : ['']
+    ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+      exts.each { |ext|
+        loc = "#{ext}/sbin/#{cmd}"
+        return loc if File.executable? loc
+        exe = File.join(path, "#{cmd}")
+        return exe if File.executable? exe
+      }
+    end
+    return nil
+  end
+
+  # The sensible default for pkg is /usr/local/sbin/pkg, however It can be
+  # in other $PATH locations, such as a local PATH for a user. Also a local
+  # compile will set LOCALBASE env var, which we should prefer if present.
+  # Default to /usr/local/sbin/pkg binary, otherwise search PATH and LOCALBASE
+  if File.executable?('/usr/local/sbin/pkg')
+    commands :pkg => '/usr/local/sbin/pkg'
+  else
+    commands :pkg => which('pkg')
+  end
 
   confine :operatingsystem => [:freebsd, :dragonfly]
   confine :pkgng_enabled => :true
