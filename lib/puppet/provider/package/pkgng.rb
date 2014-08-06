@@ -75,18 +75,9 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
 
   def repo_tag_from_urn(urn)
     # extract repo tag from URN: urn:freebsd:repo:<tag>
-    schema = ['urn', 'freebsd', 'repo', nil]
-    validation = schema.zip(urn.split(':'))
-    result = validation.map do |should, actual|
-      if should.nil?
-        value = actual
-      else
-        raise ArgumentError source.inspect unless should == actual
-        value = nil
-      end
-      value
-    end
-    result.compact.first
+    match = /^urn:freebsd:repo:(.+)$/.match(urn)
+    raise ArgumentError urn.inspect unless match
+    match[1]
   end
 
   def install

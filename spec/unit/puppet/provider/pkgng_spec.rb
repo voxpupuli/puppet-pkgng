@@ -84,6 +84,18 @@ describe provider_class do
       end
       resource.provider.install
     end
+
+    it "should call pkg with the specified package repo" do
+      resource = Puppet::Type.type(:package).new(
+        :name     => 'curl',
+        :provider => :pkgng,
+        :source   => 'urn:freebsd:repo:FreeBSD',
+      )
+      resource.provider.should_receive(:pkg) do |arg|
+        arg.should include('FreeBSD')
+      end
+      resource.provider.install
+    end
   end
 
   context "#query" do
