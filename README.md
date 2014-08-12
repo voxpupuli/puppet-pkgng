@@ -19,17 +19,30 @@ The easiest way to install is to install from the forge.
 puppet module install zleslie/pkgng
 ```
 
-Then to configure your system to use a PkgNG, a simple include will do.
+Then to configure your system to use PkgNG with all default settings, a
+simple include will do.
 
 ```Puppet
 include pkgng
 ```
 
+You may wish to override settings though, to do this simply use it as a class:
+
+```Puppet
+class { 'pkgng':
+  purge_repos_d => false
+}
+```
+
+By default, this module will erase the default repository and you'll want to
+define some. To disable this behaviour you can use the example above of
+setting `purge_repos_d` to false.
+
 Using specific repositories is as simple as a Puppet resource.
 
 ```Puppet
-pkgng::repo { 'pkg.freebsd.org': }
-pkgng::repo { 'my.own.repo': }
+pkgng::repo { 'pkg.freebsd.org': }  # You'll want this one!
+pkgng::repo { 'my.own.repo': }      # You can then specify more...
 ```
 
 ### Installation via [R10K](https://github.com/adrienthebo/r10k)
