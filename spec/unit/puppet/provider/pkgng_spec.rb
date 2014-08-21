@@ -89,7 +89,7 @@ describe provider_class do
       resource = Puppet::Type.type(:package).new(
         :name     => 'curl',
         :provider => :pkgng,
-        :source   => 'urn:freebsd:repo:FreeBSD',
+        :source   => 'urn:freebsd:repo:FreeBSD'
       )
       resource.provider.should_receive(:pkg) do |arg|
         arg.should include('FreeBSD')
