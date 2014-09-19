@@ -82,6 +82,17 @@ Package {
 
 Now every package that you install will use the PkgNG provider.
 
+With multiple repositories defined, a package can be installed from a specific
+repo by giving a URN locator for that repository like this.
+
+```Puppet
+pkgng::repo { 'my.own.repo': }
+
+package { 'puppet':
+  source => 'urn:freebsd:repo:my.own.repo',
+}
+```
+
 ## Contributing
 
 Please help make this module better.  Send pull request, file issues, be
