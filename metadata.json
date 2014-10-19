@@ -1,0 +1,36 @@
+{
+  "name": "zleslie-pkgng",
+  "version": "0.2.3",
+  "author": "zleslie",
+  "summary": "PkgNG package provider for FreeBSD",
+  "license": "Apache License Version 2.0",
+  "source": "git://github.com/xaque208/puppet-pkgng.git",
+  "project_page": "https://github.com/xaque208/puppet-pkgng",
+  "issues_url": "https://github.com/xaque208/puppet-pkgng/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [
+        "10",
+        "9.3",
+        "8.4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": ">= 3.2.0 < 3.4.0"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.0.0"
+    }
+  ]
+}
