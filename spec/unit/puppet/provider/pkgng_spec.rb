@@ -73,6 +73,18 @@ describe provider_class do
   end
 
   context "#install" do
+    it "should call pkg with the specified package version given an origin for package name" do
+      resource = Puppet::Type.type(:package).new(
+        :name     => 'ftp/curl',
+        :provider => :pkgng,
+        :ensure   => '7.33.1'
+      )
+      resource.provider.should_receive(:pkg) do |arg|
+        arg.should include('curl-7.33.1')
+      end
+      resource.provider.install
+    end
+
     it "should call pkg with the specified package version" do
       resource = Puppet::Type.type(:package).new(
         :name     => 'curl',

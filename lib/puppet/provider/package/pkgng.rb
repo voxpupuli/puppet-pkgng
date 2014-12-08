@@ -84,11 +84,19 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     source = resource[:source]
     source = URI(source) unless source.nil?
 
-    # Ensure we handle the version
-    if resource[:ensure] =~ /\./
-      installname = resource[:name] + '-' + resource[:ensure]
+    # If resource[:name] is actually an origin (e.g. 'www/curl' instead of
+    # just 'curl'), drop the category prefix. pkgng doesn't support version
+    # pinning with the origin syntax (pkg install curl-1.2.3 is valid, but
+    # pkg install www/curl-1.2.3 is not).
+    if resource[:name] =~ /\//
+      installname = resource[:name].split('/')[1]
     else
       installname = resource[:name]
+    end
+
+    # Ensure we handle the version
+    if resource[:ensure] =~ /\./
+      installname += '-' + resource[:ensure]
     end
 
     if not source # install using default repo logic
