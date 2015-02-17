@@ -8,7 +8,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   confine :operatingsystem => [:freebsd, :dragonfly]
   confine :pkgng_enabled => :true
 
-  defaultfor :operatingsystem => :freebsd
+  defaultfor :operatingsystem => [:freebsd, :dragonfly]
   defaultfor :pkgng_enabled => :true
 
 
