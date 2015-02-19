@@ -146,5 +146,13 @@ describe provider_class do
       nmap_latest_version = provider_class.get_latest_version('security/nmap')
       nmap_latest_version.should be_nil
     end
+
+    it "should match the package name exactly" do
+      bash_comp_latest_version = provider_class.get_latest_version('shells/bash-completion')
+      bash_comp_latest_version.should == "2.1_3"
+
+      bash_latest_version = provider_class.get_latest_version('shells/bash')
+      bash_latest_version.should be_nil
+    end
   end
 end
