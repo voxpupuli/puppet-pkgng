@@ -26,7 +26,7 @@ class pkgng (
   validate_bool($purge_repos_d)
 
   file { '/usr/local/etc/pkg.conf':
-    content => "PKG_DBDIR: ${pkg_dbdir}\nPKG_CACHEDIR: ${pkg_cachedir}\nPORTSDIR: ${portsdir}\n",
+    content => template('pkgng/pkg.conf'),
     notify  => Exec['pkg update'],
   }
 
