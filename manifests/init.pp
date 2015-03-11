@@ -13,6 +13,7 @@ class pkgng (
   $pkg_dbdir     = $pkgng::params::pkg_dbdir,
   $pkg_cachedir  = $pkgng::params::pkg_cachedir,
   $portsdir      = $pkgng::params::portsdir,
+  $options       = [],
   $purge_repos_d = true,
   $repos         = {},
 ) inherits pkgng::params {
@@ -22,11 +23,12 @@ class pkgng (
     fail('PKGng is either not supported on your system or it is too old')
   }
 
-  # Validate $purge_repos_d boolean
+  # Validate parameters
+  validate_array($options)
   validate_bool($purge_repos_d)
 
   file { '/usr/local/etc/pkg.conf':
-    content => "PKG_DBDIR: ${pkg_dbdir}\nPKG_CACHEDIR: ${pkg_cachedir}\nPORTSDIR: ${portsdir}\n",
+    content => template('pkgng/pkg.conf'),
     notify  => Exec['pkg update'],
   }
 

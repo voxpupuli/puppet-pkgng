@@ -30,7 +30,12 @@ You may wish to override settings though, to do this simply use it as a class:
 
 ```Puppet
 class { 'pkgng':
-  purge_repos_d => false
+  purge_repos_d => false,
+  options       => [
+    'PKG_ENV : {',
+    ' http_proxy: "http://proxy:3128"',
+    '}',
+  ],
 }
 ```
 
