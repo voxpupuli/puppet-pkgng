@@ -144,7 +144,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     install
   end
 
-  # Returnthe latest version of the package
+  # Return the latest version of the package
   def latest
     debug "returning the latest #{@property_hash[:name].inspect} version #{@property_hash[:latest].inspect}"
     @property_hash[:latest]
