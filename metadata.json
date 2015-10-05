@@ -1,6 +1,6 @@
 {
   "name": "zleslie-pkgng",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "author": "zleslie",
   "summary": "PkgNG package provider for FreeBSD",
   "license": "Apache License Version 2.0",
