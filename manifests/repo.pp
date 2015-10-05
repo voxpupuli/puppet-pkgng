@@ -5,14 +5,15 @@
 
 define pkgng::repo (
     $packagehost = $name,
-    $release     = $::operatingsystemrelease,
     $protocol    = 'http',
     $mirror_type = 'srv',
     $repopath    = '/${ABI}/latest',
     $enabled     = true,
+    $priority    = 0,
 ) {
   include ::pkgng
 
+  validate_string($packagehost)
   # validate protocol against chosen mirror_type
   case $mirror_type {
     /(?i:srv)/: {
@@ -29,6 +30,13 @@ define pkgng::repo (
       fail("Mirror type ${mirror_type} not supported")
     }
   }
+  validate_absolute_path($repopath)
+  if is_string($enabled) {
+    validate_re($enabled, ['^yes$', '^no$'])
+  } else {
+    validate_bool($enabled)
+  }
+  validate_integer($priority, 100)
 
   # define repository configuration
   file { "/usr/local/etc/pkg/repos/${name}.conf":

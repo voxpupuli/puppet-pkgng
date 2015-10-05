@@ -98,6 +98,21 @@ package { 'puppet':
 }
 ```
 
+If you have multible repos provinding the same package you can prefer one repo 
+over the other by increasing the priority.  The dafult priority is 0 and higher 
+priorities are prefered
+
+```Puppet
+pkgng::repo { 'pkg.freebsd.org': }  
+pkgng::repo { 'my.own.repo':
+  priority => 10,
+}
+
+package {'wget': }
+```
+
+With the above config if the wget package exists in both repositories it would be installed from my.own.repo
+
 ## Contributing
 
 Please help make this module better.  Send pull request, file issues, be

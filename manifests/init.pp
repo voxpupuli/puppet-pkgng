@@ -24,8 +24,12 @@ class pkgng (
   }
 
   # Validate parameters
+  validate_absolute_path($pkg_dbdir)
+  validate_absolute_path($pkg_cachedir)
+  validate_absolute_path($portsdir)
   validate_array($options)
   validate_bool($purge_repos_d)
+  validate_hash($repos)
 
   file { '/usr/local/etc/pkg.conf':
     content => template('pkgng/pkg.conf'),
