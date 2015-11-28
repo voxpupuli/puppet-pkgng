@@ -6,23 +6,18 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   commands :pkg => "/usr/local/sbin/pkg"
 
   confine :operatingsystem => [:freebsd, :dragonfly]
-  confine :pkgng_enabled => :true
 
-  defaultfor :operatingsystem => [:freebsd, :dragonfly]
-  defaultfor :pkgng_enabled => :true
-
+  defaultfor :operatingsystem => :freebsd
 
   has_feature :versionable
   has_feature :upgradeable
 
   def self.get_query
-    @pkg_query = @pkg_query || pkg(['query', '-a', '%n %v %o'])
-    @pkg_query
+    pkg(['query', '-a', '%n %v %o'])
   end
 
   def self.get_version_list
-    @version_list = @version_list || pkg(['version', '-voRL='])
-    @version_list
+    pkg(['version', '-voRL='])
   end
 
   def self.get_latest_version(origin)
@@ -84,19 +79,20 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     source = resource[:source]
     source = URI(source) unless source.nil?
 
-    # If resource[:name] is actually an origin (e.g. 'www/curl' instead of
-    # just 'curl'), drop the category prefix. pkgng doesn't support version
-    # pinning with the origin syntax (pkg install curl-1.2.3 is valid, but
-    # pkg install www/curl-1.2.3 is not).
-    if resource[:name] =~ /\//
-      installname = resource[:name].split('/')[1]
-    else
-      installname = resource[:name]
-    end
-
     # Ensure we handle the version
-    if resource[:ensure] =~ /\./
-      installname += '-' + resource[:ensure]
+    case resource[:ensure]
+    when true, false, Symbol
+      installname = resource[:name]
+      else
+        # If resource[:name] is actually an origin (e.g. 'www/curl' instead of
+        # just 'curl'), drop the category prefix. pkgng doesn't support version
+        # pinning with the origin syntax (pkg install curl-1.2.3 is valid, but
+        # pkg install www/curl-1.2.3 is not).
+        if resource[:name] =~ /\//
+          installname = resource[:name].split('/')[1] + '-' + resource[:ensure]
+        else
+          installname = resource[:name] + '-' + resource[:ensure]
+        end
     end
 
     if not source # install using default repo logic
@@ -107,6 +103,7 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
     else # add package located at URL
       args = ['add', '-q', source.to_s]
     end
+
     pkg(args)
   end
 
@@ -115,7 +112,6 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def query
-    debug @property_hash
     if @property_hash[:ensure] == nil
       return nil
     else
@@ -125,22 +121,11 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   end
 
   def version
-    debug @property_hash[:version].inspect
     @property_hash[:version]
-  end
-
-  def version=
-    pkg(['install', '-qy', "#{resource[:name]}-#{resource[:version]}"])
-  end
-
-  def origin
-    debug @property_hash[:origin].inspect
-    @property_hash[:origin]
   end
 
   # Upgrade to the latest version
   def update
-    debug 'pkgng: update called'
     install
   end
 
@@ -148,6 +133,10 @@ Puppet::Type.type(:package).provide :pkgng, :parent => Puppet::Provider::Package
   def latest
     debug "returning the latest #{@property_hash[:name].inspect} version #{@property_hash[:latest].inspect}"
     @property_hash[:latest]
+  end
+
+  def origin
+    @property_hash[:origin]
   end
 
 end
