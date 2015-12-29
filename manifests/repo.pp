@@ -4,12 +4,15 @@
 # better.
 
 define pkgng::repo (
-    $packagehost = $name,
-    $protocol    = 'http',
-    $mirror_type = 'srv',
-    $repopath    = '/${ABI}/latest',
-    $enabled     = true,
-    $priority    = 0,
+    $packagehost	= $name,
+    $protocol		= 'http',
+    $mirror_type	= 'srv',
+    $repopath		= '/${ABI}/latest',
+    $enabled		= true,
+    $priority		= 0,
+    $signature_type	= '',
+    $pubkey		= '',
+    $fingerprints	= '',
 ) {
   include ::pkgng
 
@@ -37,6 +40,20 @@ define pkgng::repo (
     validate_bool($enabled)
   }
   validate_integer($priority, 100)
+
+  validate_string($signature_type)
+  validate_absolute_path($pubkey)
+
+  if ($pubkey != "") {
+        if ($signature_type != "" and $signature_type !~ /(?ix:pubkey)/) {
+	    fail("Signature_type should be \"pubkey\"!")
+	}
+  }
+  if ($fingerprints != "") {
+        if ($signature_type != "" and $signature_type !~ /(?ix:fingerprints)/) {
+	    fail("Signature_type should be \"fingerprints\"!")
+	}
+  }
 
   # define repository configuration
   file { "/usr/local/etc/pkg/repos/${name}.conf":
