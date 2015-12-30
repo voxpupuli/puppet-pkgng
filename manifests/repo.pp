@@ -4,15 +4,15 @@
 # better.
 
 define pkgng::repo (
-    $packagehost	= $name,
-    $protocol		= 'http',
-    $mirror_type	= 'srv',
-    $repopath		= '/${ABI}/latest',
-    $enabled		= true,
-    $priority		= 0,
-    $signature_type	= '',
-    $pubkey		= '',
-    $fingerprints	= '',
+    $packagehost  = $name,
+    $protocol    = 'http',
+    $mirror_type  = 'srv',
+    $repopath    = '/${ABI}/latest',
+    $enabled    = true,
+    $priority    = 0,
+    $signature_type  = '',
+    $pubkey    = '',
+    $fingerprints  = '',
 ) {
   include ::pkgng
 
@@ -44,15 +44,15 @@ define pkgng::repo (
   validate_string($signature_type)
   validate_absolute_path($pubkey)
 
-  if ($pubkey != "") {
-        if ($signature_type != "" and $signature_type !~ /(?ix:pubkey)/) {
-	    fail("Signature_type should be \"pubkey\"!")
-	}
+  if ($pubkey != '') {
+        if ($signature_type != '' and $signature_type !~ /(?ix:pubkey)/) {
+      fail("Signature_type should be \"pubkey\"!")
   }
-  if ($fingerprints != "") {
-        if ($signature_type != "" and $signature_type !~ /(?ix:fingerprints)/) {
-	    fail("Signature_type should be \"fingerprints\"!")
-	}
+  }
+  if ($fingerprints != '') {
+        if ($signature_type != '' and $signature_type !~ /(?ix:fingerprints)/) {
+      fail("Signature_type should be \"fingerprints\"!")
+  }
   }
 
   # define repository configuration
