@@ -20,6 +20,8 @@ define pkgng::repo (
   Pattern[/^\/.*$/] $repopath                      = '/${ABI}/latest',
   Boolean $enabled                                 = true,
   Integer[0,100] $priority                          = 0,
+  $pubkey       = undef,
+  $fingerprints = undef,
 ) {
   include ::pkgng
 
