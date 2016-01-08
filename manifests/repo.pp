@@ -4,12 +4,14 @@
 # better.
 
 define pkgng::repo (
-    $packagehost = $name,
-    $protocol    = 'http',
-    $mirror_type = 'srv',
-    $repopath    = '/${ABI}/latest',
-    $enabled     = true,
-    $priority    = 0,
+    $packagehost  = $name,
+    $protocol     = 'http',
+    $mirror_type  = 'srv',
+    $repopath     = '/${ABI}/latest',
+    $enabled      = true,
+    $priority     = 0,
+    $pubkey       = undef
+    $fingerprints = undef
 ) {
   include ::pkgng
 
