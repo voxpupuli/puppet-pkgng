@@ -7,9 +7,9 @@
     priority:       <%= @priority %>
     <%- if @pubkey -%>
     signature_type: "pubkey",
-    pubkey:         <%= @pubkey %>,
+    pubkey:         "<%= @pubkey %>",
     <%- elsif @fingerprints -%>
     signature_type: "fingerprints",
-    fingerprints:   <%= @fingerprints %>,
+    fingerprints:   "<%= @fingerprints %>",
     <%- end -%>
 }
