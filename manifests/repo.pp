@@ -10,8 +10,8 @@ define pkgng::repo (
     $repopath     = '/${ABI}/latest',
     $enabled      = true,
     $priority     = 0,
-    $pubkey       = undef
-    $fingerprints = undef
+    $pubkey       = undef,
+    $fingerprints = undef,
 ) {
   include ::pkgng
 
