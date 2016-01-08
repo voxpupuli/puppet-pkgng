@@ -6,10 +6,10 @@
     enabled:        <% if @enabled == true or @enabled == 'yes' %>yes<% else %>no<% end %>,
     priority:       <%= @priority %>
     <%- if @pubkey -%>
-    signature_type: "pubkey"
+    signature_type: "pubkey",
     pubkey:         <%= @pubkey %>,
     <%- elsif @fingerprints -%>
-    signature_type: "fingerprints"
+    signature_type: "fingerprints",
     fingerprints:   <%= @fingerprints %>,
     <%- end -%>
 }
