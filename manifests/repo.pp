@@ -39,7 +39,7 @@ define pkgng::repo (
   } else {
     validate_bool($enabled)
   }
-  validate_integer($priority, 100)
+  validate_integer($priority, undef, 0)
 
   validate_string($signature_type)
   validate_absolute_path($pubkey)
