@@ -1,8 +1,6 @@
-Puppet-pkgng
-===
+# Puppet-pkgng
 
-[![Build Status](https://travis-ci.org/xaque208/puppet-pkgng.png)](https://travis-ci.org/xaque208/puppet-pkgng)
-
+[![Puppet Forge](https://img.shields.io/puppetforge/v/zleslie/pkgng.svg)]() [![Build Status](https://travis-ci.org/xaque208/puppet-pkgng.svg?branch=master)](https://travis-ci.org/xaque208/puppet-pkgng)
 
 A package provider for FreeBSD's PkgNG package manager.
 
