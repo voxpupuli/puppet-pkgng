@@ -9,27 +9,29 @@
 #
 # To install PkgNG, one can simply run the following:
 # make -C /usr/ports/ports-mgmg/pkg install clean
+#
+# @example
+#   include pkgng
+#
+# @param pkg_dbdir Full path to database directory for pkg(8)
+# @param pkg_cachedir Full path to cache directory for pkg(8)
+# @param portsdir Full path to ports directory
+# @param options Array of options to write to pkg.conf(5)
+# @param purge_repos_d Boolean when true removes unmanaged repos
+# @param repos Hash of resources to pass to create_resources()
+#
 class pkgng (
-  $pkg_dbdir     = $pkgng::params::pkg_dbdir,
-  $pkg_cachedir  = $pkgng::params::pkg_cachedir,
-  $portsdir      = $pkgng::params::portsdir,
-  $options       = [],
-  $purge_repos_d = true,
-  $repos         = {},
+  Pattern[/^\/.*/] $pkg_dbdir     = $pkgng::params::pkg_dbdir,
+  Pattern[/^\/.*/] $pkg_cachedir  = $pkgng::params::pkg_cachedir,
+  Pattern[/^\/.*/] $portsdir      = $pkgng::params::portsdir,
+  Array            $options       = [],
+  Boolean          $purge_repos_d = true,
+  Hash             $repos         = {},
 ) inherits pkgng::params {
 
-  # PkgNG versions before 1.1.4 use another method of defining repositories
-  if ! $::pkgng_supported or versioncmp($::pkgng_version, '1.1.4') < 0 {
-    fail('PKGng is either not supported on your system or it is too old')
+  unless $::kernel == 'FreeBSD' {
+    fail("pkg() is not supported on ${::kernel}")
   }
-
-  # Validate parameters
-  validate_absolute_path($pkg_dbdir)
-  validate_absolute_path($pkg_cachedir)
-  validate_absolute_path($portsdir)
-  validate_array($options)
-  validate_bool($purge_repos_d)
-  validate_hash($repos)
 
   file { '/usr/local/etc/pkg.conf':
     content => template('pkgng/pkg.conf'),
