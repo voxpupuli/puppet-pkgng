@@ -1,8 +1,18 @@
 # File managed by Puppet
 
 <%= @name -%>: {
-    url:         "<% if @mirror_type =~ /srv/i %>pkg+<% end %><%= @protocol %>://<%= @packagehost %><%= @repopath %>",
-    mirror_type: "<%= @mirror_type %>",
-    enabled:     <% if @enabled == true or @enabled == 'yes' %>yes<% else %>no<% end %>,
-    priority:    <%= @priority %>
+    url:		"<% if @mirror_type =~ /srv/i %>pkg+<% end %><%= @protocol %>://<%= @packagehost %><%= @repopath %>",
+    mirror_type:	"<%= @mirror_type %>",
+    enabled:		<% if @enabled == true or @enabled == 'yes' %>yes<% else %>no<% end %>,
+    <%- if @priority != 0 -%>
+    priority:		<%= @priority %>,
+    <%- end -%>
+    <%- if @pubkey != '' -%>
+    pubkey:		"<%= @pubkey %>",
+    signature_type:	"pubkey"
+    <%- end -%>
+    <%- if @fingerprints != '' -%>
+    fingerprints:	"<%= @fingerprints %>",
+    signature_type:	"fingerprints"
+    <% end -%>
 }
