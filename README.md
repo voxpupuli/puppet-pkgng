@@ -132,7 +132,7 @@ For any provider changes, please submit those directly to core
 
 ## Thanks
 
-Thanks to all contributor who helped mature the provider and helped it graduate
-from this module into core Puppet.  Its maintenance will also require community
-attention.
+Thanks to all contributors who helped mature the provider and helped it
+graduate from this module into core Puppet.  Its maintenance will also require
+community attention.
 
