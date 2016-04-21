@@ -22,6 +22,34 @@ describe 'pkgng::repo' do
           raise_error(Puppet::ParseError)
         }
       end
+
+      {
+        'http' => [
+          'http',
+          'https',
+          'ftp',
+          'file',
+          'ssh',
+        ],
+        'srv' => [
+          'http',
+          'https',
+        ]
+      }.each {|k,v|
+        mirror_type = k
+        context "mirror_type => #{mirror_type}" do
+          v.each {|p|
+            protocol = p
+            context "protocol => #{protocol}" do
+              let(:params) { {
+                :protocol => "#{protocol}://somewheregood",
+                :mirror_type => mirror_type,
+              } }
+              it { should contain_pkgng__repo('pkg.example.com') }
+            end
+          }
+        end
+      }
     end
   end
 end
