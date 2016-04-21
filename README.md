@@ -127,8 +127,7 @@ Please help make this module better.  Send pull request, file issues, be
 mindful of the tests and help improve where you can.
 
 For any provider changes, please submit those directly to core
-[Puppet](https://github.com/puppetlabs/puppet).  Feel free to mention
-`@xaque208` if you'd like my review.
+[Puppet](https://github.com/puppetlabs/puppet).
 
 ## Thanks
 
