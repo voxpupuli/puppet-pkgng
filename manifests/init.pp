@@ -9,6 +9,17 @@
 #
 # To install PkgNG, one can simply run the following:
 # make -C /usr/ports/ports-mgmg/pkg install clean
+#
+# @example
+#   include pkgng
+#
+# @param pkg_dbdir Full path to database directory for pkg(8)
+# @param pkg_cachedir Full path to cache directory for pkg(8)
+# @param portsdir Full path to ports directory
+# @param options Array of options to write to pkg.conf(5)
+# @param purge_repos_d Boolean when true removes unmanaged repos
+# @param repos Hash of resources to pass to create_resources()
+#
 class pkgng (
   Pattern[/^\/.*/] $pkg_dbdir     = $pkgng::params::pkg_dbdir,
   Pattern[/^\/.*/] $pkg_cachedir  = $pkgng::params::pkg_cachedir,
