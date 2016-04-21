@@ -42,10 +42,19 @@ describe 'pkgng::repo' do
             protocol = p
             context "protocol => #{protocol}" do
               let(:params) { {
-                :protocol => "#{protocol}://somewheregood",
+                :protocol => "#{protocol}",
                 :mirror_type => mirror_type,
               } }
               it { should contain_pkgng__repo('pkg.example.com') }
+              if mirror_type =~ /^srv$/
+                it { should contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
+                  :content => /\s+url:\s+"pkg\+#{protocol}:\/\/pkg.example.com\/\$\{ABI\}\/latest"/
+                )}
+              else
+                it { should contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
+                  :content => /\s+url:\s+"#{protocol}:\/\/pkg.example.com\/\$\{ABI\}\/latest"/
+                )}
+              end
             end
           }
         end
