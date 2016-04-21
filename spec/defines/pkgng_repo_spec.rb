@@ -23,6 +23,20 @@ describe 'pkgng::repo' do
         }
       end
 
+      context 'with priority set to a valid number' do
+        let(:params) { {:priority => 12} }
+        it { should contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
+          :content => /\s+priority:\s+12$/
+        )}
+      end
+
+      context 'with priority set to an invalid number' do
+        let(:params) { {:priority => 101} }
+        it {
+          raise_error(Puppet::ParseError)
+        }
+      end
+
       {
         'http' => [
           'http',
