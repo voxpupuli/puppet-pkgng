@@ -1,6 +1,6 @@
 # Puppet-pkgng
 
-[![Puppet Forge](https://img.shields.io/puppetforge/v/zleslie/pkgng.svg)]() [![Build Status](https://travis-ci.org/xaque208/puppet-pkgng.svg?branch=master)](https://travis-ci.org/xaque208/puppet-pkgng)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/zleslie/pkgng.svg)](https://forge.puppet.com/zleslie/pkgng) [![Build Status](https://travis-ci.org/xaque208/puppet-pkgng.svg?branch=master)](https://travis-ci.org/xaque208/puppet-pkgng)
 
 The package provider that matured in this repository has been merged upstream
 into the core Puppet package providers.  As of puppet 4.1, you can enjoy the
