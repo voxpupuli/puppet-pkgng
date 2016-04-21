@@ -12,7 +12,7 @@ require 'metadata-json-lint/rake_task'
 # on Travis with --without development
 begin
   require 'puppet_blacksmith/rake_tasks'
-rescue LoadError
+rescue LoadError # rubocop:disable Lint/HandleExceptions
 end
 
 exclude_paths = [
