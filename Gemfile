@@ -12,12 +12,7 @@ end
 group :development do
   gem "travis"
   gem "travis-lint"
-  gem "vagrant-wrapper"
   gem "puppet-blacksmith"
   gem "guard-rake"
 end
 
-group :system_tests do
-  gem "beaker"
-  gem "beaker-rspec"
-end
