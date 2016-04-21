@@ -17,12 +17,12 @@ define pkgng::repo (
   # validate protocol against chosen mirror_type
   case $mirror_type {
     /(?i:srv)/: {
-      if $protocol !~ /(?i:http(s)?)/ {
+      if $protocol !~ /^(?i:http(s)?)$/ {
         fail("Mirror type ${mirror_type} support http:// and https:// only")
       }
     }
     /(?i:http)/: {
-      if $protocol !~ /(?i:(http|https|ftp|file|ssh))/ {
+      if $protocol !~ /^(?i:^(http|https|ftp|file|ssh))$/ {
         fail("Mirror type ${mirror_type} support http://, https://, ftp://, file://, ssh:// only")
       }
     }
