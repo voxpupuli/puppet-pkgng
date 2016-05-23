@@ -1,6 +1,13 @@
 ## Unreleased
  - 
 
+## 2016-05-22 1.1.1
+### Summary
+This relase contains updates to testing.
+
+#### Testing
+ - Drop guard from Gemfile
+
 ## 2016-05-22 1.1.0
 ### Summary
 This release contains an initial changelog as well as default pkg changes.
