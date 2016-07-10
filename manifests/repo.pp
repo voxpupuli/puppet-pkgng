@@ -27,5 +27,6 @@ define pkgng::repo (
   file { "/usr/local/etc/pkg/repos/${name}.conf":
     content => template("${module_name}/repo.erb"),
     notify  => Exec['pkg update'],
+    require => File['/usr/local/etc/pkg/repos'],
   }
 }

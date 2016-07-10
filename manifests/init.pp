@@ -29,7 +29,7 @@ class pkgng (
   Hash             $repos         = {},
 ) inherits pkgng::params {
 
-  unless $::kernel == 'FreeBSD' {
+  unless $facts['kernel'] == 'FreeBSD' {
     fail("pkg() is not supported on ${::kernel}")
   }
 
@@ -47,6 +47,7 @@ class pkgng (
     File['/usr/local/etc/pkg/repos'] {
       recurse => true,
       purge   => true,
+      before  => Exec['pkg update']
     }
 
     file { '/etc/pkg':
