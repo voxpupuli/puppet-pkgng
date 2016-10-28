@@ -1,5 +1,4 @@
 ---
-sudo: false
 language: ruby
 bundler_args: --without development
 before_install:
@@ -7,11 +6,11 @@ before_install:
   - gem update bundler
 rvm:
   - 1.9.3
-  - 2.1.0
-  - 2.2.0
+  - 2.1
+  - 2.2
 script: bundle exec rake test
 env:
-  - PUPPET_VERSION="~> 4.1.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 4.2.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 4.3.0" STRICT_VARIABLES=yes
   - PUPPET_VERSION="~> 4.4.0" STRICT_VARIABLES=yes
+  - PUPPET_VERSION="~> 4.5.0" STRICT_VARIABLES=yes
+  - PUPPET_VERSION="~> 4.6.0" STRICT_VARIABLES=yes
+sudo: false

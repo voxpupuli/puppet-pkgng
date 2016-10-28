@@ -12,6 +12,9 @@
 # @param repopath Path at packagehost url server beginning with /
 # @param enabled Boolean to enable or disable the repository
 # @param priority Interger specifying the order of precedence in multi-repo
+# @param signature_type String specifying signature type, can be NONE, PUBKEY or FINGERPRINTS
+# @param pubkey String containing the full path to the public key to use, implies PUBKEY signature_type
+# @param fingerprints String containingthe full path to file containing valid fingerprints, see pkg.conf(8)
 #
 define pkgng::repo (
   String $packagehost                              = $name,
@@ -19,9 +22,10 @@ define pkgng::repo (
   Pattern[/srv|http/] $mirror_type                 = 'srv',
   Pattern[/^\/.*$/] $repopath                      = '/${ABI}/latest',
   Boolean $enabled                                 = true,
-  Integer[0,100] $priority                          = 0,
-  $pubkey       = undef,
-  $fingerprints = undef,
+  Integer[0,100] $priority                         = 0,
+  Optional[String] $signature_type                 = undef,
+  Optional[Pattern[/^\/.*/]] $pubkey               = undef,
+  Optional[Pattern[/^\/.*/]] $fingerprints         = undef,
 ) {
   include ::pkgng
 

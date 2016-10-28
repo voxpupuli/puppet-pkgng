@@ -26,7 +26,7 @@ describe 'pkgng::repo' do
       context 'with priority set to a valid number' do
         let(:params) { {:priority => 12} }
         it { should contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-          :content => /\s+priority:\s+12$/
+          :content => /\s+priority:\s+12,$/
         )}
       end
 
@@ -35,6 +35,28 @@ describe 'pkgng::repo' do
         it {
           raise_error(Puppet::ParseError)
         }
+      end
+
+      context 'with pubkey set' do
+        let(:params) { {:pubkey => '/path/to/pubkey'} }
+        it { should contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
+          :content => /^\s+signature_type:\s+"pubkey",$/
+        )}
+
+        it { should contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
+          :content => /^\s+pubkey:\s+"\/path\/to\/pubkey",$/
+        )}
+      end
+
+      context 'with fingerprints set' do
+        let(:params) { {:fingerprints => '/path/to/fingerprints'} }
+        it { should contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
+          :content => /^\s+signature_type:\s+"fingerprints",$/
+        )}
+
+        it { should contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
+          :content => /^\s+fingerprints:\s+"\/path\/to\/fingerprints",$/
+        )}
       end
 
       {
