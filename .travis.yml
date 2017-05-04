@@ -1,16 +1,36 @@
 ---
-language: ruby
-bundler_args: --without development
-before_install:
-  - rm Gemfile.lock || true
-  - gem update bundler
-rvm:
-  - 1.9.3
-  - 2.1
-  - 2.2
-script: bundle exec rake test
-env:
-  - PUPPET_VERSION="~> 4.4.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 4.5.0" STRICT_VARIABLES=yes
-  - PUPPET_VERSION="~> 4.6.0" STRICT_VARIABLES=yes
 sudo: false
+dist: trusty
+language: ruby
+cache: bundler
+bundler_args: --without system_tests development
+before_install:
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system
+  - gem update bundler
+  - gem --version
+  - bundle -v
+script:
+  - 'bundle exec rake $CHECK'
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.2.6
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.3.3
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.4.0
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.4.0
+    env: PUPPET_VERSION="~> 4.0" CHECK=rubocop
+  - rvm: 2.4.0
+    env: PUPPET_VERSION="~> 4.0" CHECK=build
+branches:
+  only:
+  - master
+  - /^v\d/
+notifications:
+  email: false

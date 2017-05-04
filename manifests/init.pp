@@ -53,7 +53,7 @@ class pkgng (
       ensure  => directory,
       purge   => true,
       recurse => true,
-      before  => Exec['pkg update']
+      before  => Exec['pkg update'],
     }
   }
 
