@@ -21,12 +21,12 @@
 # @param repos Hash of resources to pass to create_resources()
 #
 class pkgng (
-  Pattern[/^\/.*/] $pkg_dbdir     = $pkgng::params::pkg_dbdir,
-  Pattern[/^\/.*/] $pkg_cachedir  = $pkgng::params::pkg_cachedir,
-  Pattern[/^\/.*/] $portsdir      = $pkgng::params::portsdir,
-  Array            $options       = [],
-  Boolean          $purge_repos_d = true,
-  Hash             $repos         = {},
+  Stdlib::Absolutepath $pkg_dbdir     = $pkgng::params::pkg_dbdir,
+  Stdlib::Absolutepath $pkg_cachedir  = $pkgng::params::pkg_cachedir,
+  Stdlib::Absolutepath $portsdir      = $pkgng::params::portsdir,
+  Array[String]        $options       = [],
+  Boolean              $purge_repos_d = true,
+  Hash                 $repos         = {},
 ) inherits pkgng::params {
 
   unless $::kernel == 'FreeBSD' {
