@@ -61,34 +61,11 @@ class pkgng (
     ensure => directory,
   }
 
-  file { '/etc/make.conf':
-    ensure => present,
-  }
-
-  file_line { 'WITH_PKGNG':
-    path    => '/etc/make.conf',
-    line    => "WITH_PKGNG=yes\n",
-    require => File['/etc/make.conf'],
-  }
-
   # Triggered on config changes
   exec { 'pkg update':
     path        => '/usr/local/sbin',
     refreshonly => true,
     command     => 'pkg update -q -f',
-  }
-
-  # This exec should really on ever be run once, and only upon converting to
-  # pkgng. If you are building up a new system where the only software that
-  # has been installed form ports is the pkgng itself, then the pkg database
-  # is already up to date, and this is not required. As you will see,
-  # refreshonly, but nothing notifies this. I am uncertain at this time how
-  # to proceed, other than manually.
-  exec { 'convert pkg database to pkgng':
-    path        => '/usr/local/sbin',
-    refreshonly => true,
-    command     => 'pkg2ng',
-    require     => File['/etc/make.conf'],
   }
 
   # expand all pkg repositories from hashtable
