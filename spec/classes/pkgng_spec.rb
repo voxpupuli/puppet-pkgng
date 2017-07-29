@@ -7,7 +7,6 @@ describe 'pkgng' do
 
       it { is_expected.to contain_class('pkgng') }
       it { is_expected.to contain_class('pkgng::params') }
-      it { is_expected.to contain_file('/etc/pkg').with(ensure: 'directory') }
       it { is_expected.to contain_file('/usr/local/etc/pkg').with(ensure: 'directory') }
       it { is_expected.to contain_file('/usr/local/etc/pkg/repos').with(ensure: 'directory') }
       it { is_expected.to contain_file('/usr/local/etc/pkg.conf') }

@@ -43,22 +43,10 @@ class pkgng (
     ensure => directory,
   }
 
-  if $purge_repos_d == true {
-    File['/usr/local/etc/pkg/repos'] {
-      recurse => true,
-      purge   => true,
-    }
-
-    file { '/etc/pkg':
-      ensure  => directory,
-      purge   => true,
-      recurse => true,
-      before  => Exec['pkg update'],
-    }
-  }
-
   file { '/usr/local/etc/pkg/repos':
-    ensure => directory,
+    ensure  => directory,
+    recurse => true,
+    purge   => $purge_repos_d,
   }
 
   # Triggered on config changes
