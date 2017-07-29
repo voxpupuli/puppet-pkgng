@@ -12,20 +12,18 @@
 # @param repopath Path at packagehost url server beginning with /
 # @param enabled Boolean to enable or disable the repository
 # @param priority Interger specifying the order of precedence in multi-repo
-# @param signature_type String specifying signature type, can be NONE, PUBKEY or FINGERPRINTS
-# @param pubkey String containing the full path to the public key to use, implies PUBKEY signature_type
+# @param pubkey String containing the full path to the public key to use
 # @param fingerprints String containingthe full path to file containing valid fingerprints, see pkg.conf(8)
 #
 define pkgng::repo (
-  String $packagehost                              = $name,
-  Pattern[/^(http|https|ftp|file|ssh)$/] $protocol = 'http',
-  Pattern[/srv|http/] $mirror_type                 = 'srv',
-  Pattern[/^\/.*$/] $repopath                      = '/${ABI}/latest',
-  Boolean $enabled                                 = true,
-  Integer[0,100] $priority                         = 0,
-  Optional[String] $signature_type                 = undef,
-  Optional[Pattern[/^\/.*/]] $pubkey               = undef,
-  Optional[Pattern[/^\/.*/]] $fingerprints         = undef,
+  String                                      $packagehost    = $name,
+  Enum['file', 'ftp', 'http', 'https', 'ssh'] $protocol       = 'http',
+  Enum['srv', 'http']                         $mirror_type    = 'srv',
+  Stdlib::Absolutepath                        $repopath       = '/${ABI}/latest', # lint:ignore:single_quote_string_with_variables
+  Boolean                                     $enabled        = true,
+  Integer[0,100]                              $priority       = 0,
+  Optional[Stdlib::Absolutepath]              $pubkey         = undef,
+  Optional[Stdlib::Absolutepath]              $fingerprints   = undef,
 ) {
   include ::pkgng
 
