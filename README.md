@@ -51,9 +51,17 @@ class { 'pkgng':
 }
 ```
 
-By default, this module will erase the default repository and you'll want to
-define some. To disable this behaviour you can use the example above of
+By default, this module will erase user-defined repository not managed by Puppet.
+To disable this behaviour you can use the example above of
 setting `purge_repos_d` to false.
+
+Disabling the FreeBSD default repository is done with:
+
+```Puppet
+pkgng::repo { 'FreeBSD':
+  enabled => false,
+}
+```
 
 Using specific repositories is as simple as a Puppet resource.
 
