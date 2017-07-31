@@ -54,7 +54,7 @@ Facter.add('pkg_vulnerabilities') do
   end
 end
 
-Facter.add('pkg_package_vulnerables') do
+Facter.add('pkg_vulnerable_packages') do
   confine pkg_has_vulnerabilities: true
   setcode do
     if Facter.version < '2.0.0'

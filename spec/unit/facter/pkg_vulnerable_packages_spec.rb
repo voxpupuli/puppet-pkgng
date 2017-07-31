@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'pkg_package_vulnerables fact' do
-  subject { Facter.fact(:pkg_package_vulnerables).value }
+describe 'pkg_vulnerable_packages fact' do
+  subject { Facter.fact(:pkg_vulnerable_packages).value }
   after { Facter.clear }
 
   before do
