@@ -1,6 +1,10 @@
 ## Unreleased
  - 
 
+## 2017-07-31 2.1.0
+### Summary
+This release contains new facts about the state of the package updates and vulnerabilities, nested under 'pkg_*'.
+
 ## 2017-07-29 2.0.0
 ### Summary
 This release contains some cleanup in manifest, approach, and testing.
