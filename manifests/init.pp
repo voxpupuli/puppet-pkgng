@@ -33,6 +33,9 @@ class pkgng (
     fail("pkg() is not supported on ${::kernel}")
   }
 
+  # Pkgng::Repo <||> -> Package <| provider == 'pkgng' |>
+  Exec['pkg update'] -> Package <| provider = 'pkgng' |>
+
   file { '/usr/local/etc/pkg.conf':
     content => template('pkgng/pkg.conf'),
     notify  => Exec['pkg update'],
