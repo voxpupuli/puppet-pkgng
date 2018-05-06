@@ -27,9 +27,12 @@ define pkgng::repo (
 ) {
   include ::pkgng
 
+  File["/usr/local/etc/pkg/repos/${name}.conf"] -> Package <| provider == 'pkgng' |>
+
   # define repository configuration
   file { "/usr/local/etc/pkg/repos/${name}.conf":
     content => template("${module_name}/repo.erb"),
+    before  => Package['pkg'],
     notify  => Exec['pkg update'],
   }
 }

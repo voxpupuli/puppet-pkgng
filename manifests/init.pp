@@ -58,4 +58,5 @@ class pkgng (
 
   # expand all pkg repositories from hashtable
   create_resources('pkgng::repo', $repos)
+
 }
