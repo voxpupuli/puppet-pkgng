@@ -56,6 +56,9 @@ class pkgng (
     command     => 'pkg update -q -f',
   }
 
+  Exec['pkg update']
+  -> Package <| provider == 'pkgng' or provider == undef |>
+
   # expand all pkg repositories from hashtable
   create_resources('pkgng::repo', $repos)
 }
