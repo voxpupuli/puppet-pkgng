@@ -5,7 +5,7 @@ Facter.add('pkg_has_updates') do
   confine osfamily: 'FreeBSD'
   setcode do
     if File.executable?('/usr/sbin/pkg')
-      pkg_version_result = Facter::Util::Resolution.exec('/usr/sbin/pkg version -ql"<"')
+      pkg_version_result = Facter::Util::Resolution.exec('/usr/sbin/pkg version -RUql"<"')
       unless pkg_version_result.nil?
         pkg_version_result.each_line do |line|
           package = line.split.first
