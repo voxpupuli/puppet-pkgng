@@ -16,7 +16,7 @@ describe 'pkg_has_updates fact' do
     before do
       File.stubs(:executable?)
       File.expects(:executable?).with('/usr/sbin/pkg').returns true
-      Facter::Util::Resolution.expects(:exec).with('/usr/sbin/pkg version -ql"<"').returns(pkg_version_output)
+      Facter::Util::Resolution.expects(:exec).with('/usr/sbin/pkg version -RUql"<"').returns(pkg_version_output)
     end
     context 'without package updates' do
       let(:pkg_version_output) { '' }

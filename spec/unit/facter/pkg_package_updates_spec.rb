@@ -8,7 +8,7 @@ describe 'pkg_package_updates fact' do
     File.stubs(:executable?)
     Facter.fact(:osfamily).expects(:value).returns 'FreeBSD'
     File.expects(:executable?).with('/usr/sbin/pkg').returns true
-    Facter::Util::Resolution.expects(:exec).with('/usr/sbin/pkg version -ql"<"').returns(pkg_version_output)
+    Facter::Util::Resolution.expects(:exec).with('/usr/sbin/pkg version -RUql"<"').returns(pkg_version_output)
   end
 
   context 'when there is no update' do
