@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'pkg_vulnerable_packages fact' do
   subject { Facter.fact(:pkg_vulnerable_packages).value }
+
   after { Facter.clear }
 
   before do
@@ -13,11 +14,13 @@ describe 'pkg_vulnerable_packages fact' do
 
   context 'when there is no update' do
     let(:pkg_audit_output) { '' }
+
     it { is_expected.to be nil }
   end
 
   context 'when there are updates' do
     let(:pkg_audit_output) { "apr-1.6.2.1.6.0\napache24-2.4.27\n" }
+
     if Facter.version < '2.0.0'
       it { is_expected.to eq('apr-1.6.2.1.6.0,apache24-2.4.27') }
     else
