@@ -25,7 +25,7 @@ define pkgng::repo (
   Optional[Stdlib::Absolutepath]              $pubkey         = undef,
   Optional[Stdlib::Absolutepath]              $fingerprints   = undef,
 ) {
-  include ::pkgng
+  include pkgng
 
   # define repository configuration
   file { "/usr/local/etc/pkg/repos/${name}.conf":
