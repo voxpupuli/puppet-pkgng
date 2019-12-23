@@ -5,7 +5,9 @@ describe 'pkg_has_vulnerabilities fact' do
 
   after { Facter.clear }
 
-  before { Facter.fact(:osfamily).expects(:value).returns(osfamily) }
+  before do
+    allow(Facter.fact(:osfamily)).to receive(:value) { osfamily }
+  end
 
   context 'on non FreeBSD host' do
     let(:osfamily) { 'Debian' }
@@ -17,10 +19,11 @@ describe 'pkg_has_vulnerabilities fact' do
     let(:osfamily) { 'FreeBSD' }
 
     before do
-      File.stubs(:executable?)
-      File.expects(:executable?).with('/usr/sbin/pkg').returns true
-      Facter::Util::Resolution.expects(:exec).with('/usr/sbin/pkg audit -q').returns(pkg_audit_output)
+      allow(File).to receive(:executable?) { false }
+      allow(File).to receive(:executable?).with('/usr/sbin/pkg') { true }
+      allow(Facter::Util::Resolution).to receive(:exec).with('/usr/sbin/pkg audit -q') { pkg_audit_output }
     end
+
     context 'without package vulnerabilities' do
       let(:pkg_audit_output) { '' }
 
