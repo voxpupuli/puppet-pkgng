@@ -1,6 +1,10 @@
 # Puppet-pkgng
 
-[![Puppet Forge](https://img.shields.io/puppetforge/v/zleslie/pkgng.svg)](https://forge.puppet.com/zleslie/pkgng) [![Build Status](https://travis-ci.org/xaque208/puppet-pkgng.svg?branch=master)](https://travis-ci.org/xaque208/puppet-pkgng)
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-pkgng.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-pkgng)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/pkgng.svg)](https://forge.puppetlabs.com/puppet/pkgng)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/pkgng.svg)](https://forge.puppetlabs.com/puppet/pkgng)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/pkgng.svg)](https://forge.puppetlabs.com/puppet/pkgng)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/pkgng.svg)](https://forge.puppetlabs.com/puppet/pkgng)
 
 The package provider that matured in this repository has been merged upstream
 into the core Puppet package providers.  As of puppet 4.1, you can enjoy the
@@ -8,7 +12,7 @@ fruits of the pkgng provider without this module.  This module now remains to
 manage pkg.conf, extra package repositories etc.
 
 If you are looking to build your own PkgNG packages, you may also want to look
-at the [poudriere module](https://github.com/xaque208/puppet-poudriere).
+at the [poudriere module](https://github.com/voxpupuli/puppet-poudriere).
 
 ## Upgrading Requirements
 
