@@ -28,7 +28,6 @@ class pkgng (
   Boolean              $purge_repos_d = true,
   Hash                 $repos         = {},
 ) inherits pkgng::params {
-
   unless $::kernel == 'FreeBSD' {
     fail("pkg() is not supported on ${::kernel}")
   }
