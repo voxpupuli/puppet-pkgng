@@ -6,10 +6,10 @@ describe 'pkg_vulnerable_packages fact' do
   after { Facter.clear }
 
   before do
-    allow(File).to receive(:executable?) { false }
-    allow(File).to receive(:executable?).with('/usr/sbin/pkg') { true }
-    allow(Facter.fact(:osfamily)).to receive(:value) { 'FreeBSD' }
-    allow(Facter::Util::Resolution).to receive(:exec).with('/usr/sbin/pkg audit -q') { pkg_audit_output }
+    allow(File).to receive(:executable?).and_return(false)
+    allow(File).to receive(:executable?).with('/usr/sbin/pkg').and_return(true)
+    allow(Facter.fact(:osfamily)).to receive(:value).and_return('FreeBSD')
+    allow(Facter::Util::Resolution).to receive(:exec).with('/usr/sbin/pkg audit -q').and_return(pkg_audit_output)
   end
 
   context 'when there is no update' do
