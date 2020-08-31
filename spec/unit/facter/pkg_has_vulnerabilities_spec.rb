@@ -6,7 +6,7 @@ describe 'pkg_has_vulnerabilities fact' do
   after { Facter.clear }
 
   before do
-    allow(Facter.fact(:osfamily)).to receive(:value) { osfamily }
+    allow(Facter.fact(:osfamily)).to receive(:value).and_return(osfamily)
   end
 
   context 'on non FreeBSD host' do
@@ -19,9 +19,9 @@ describe 'pkg_has_vulnerabilities fact' do
     let(:osfamily) { 'FreeBSD' }
 
     before do
-      allow(File).to receive(:executable?) { false }
-      allow(File).to receive(:executable?).with('/usr/sbin/pkg') { true }
-      allow(Facter::Util::Resolution).to receive(:exec).with('/usr/sbin/pkg audit -q') { pkg_audit_output }
+      allow(File).to receive(:executable?).and_return(false)
+      allow(File).to receive(:executable?).with('/usr/sbin/pkg').and_return(true)
+      allow(Facter::Util::Resolution).to receive(:exec).with('/usr/sbin/pkg audit -q').and_return(pkg_audit_output)
     end
 
     context 'without package vulnerabilities' do
