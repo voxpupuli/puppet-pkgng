@@ -32,7 +32,7 @@ The latest release of this module to contain the package provider is `0.4.0`.
 The easiest way to install is to install from the forge.
 
 ```
-puppet module install zleslie/pkgng
+puppet module install puppet/pkgng
 ```
 
 Then to configure your system to use PkgNG with all default settings, a
