@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.0.0](https://github.com/voxpupuli/puppet-pkgng/tree/v3.0.0) (2022-09-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-pkgng/compare/v2.4.0...v3.0.0)
+
+**Breaking changes:**
+
+- Drop support for FreeBSD 11 \(EOL\) [\#114](https://github.com/voxpupuli/puppet-pkgng/pull/114) ([smortex](https://github.com/smortex))
+- Drop support for Puppet 5 \(EOL\) [\#112](https://github.com/voxpupuli/puppet-pkgng/pull/112) ([smortex](https://github.com/smortex))
+- Drop Puppet 4 support [\#107](https://github.com/voxpupuli/puppet-pkgng/pull/107) ([ekohl](https://github.com/ekohl))
+
+**Implemented enhancements:**
+
+- Add support for FreeBSD 13 [\#115](https://github.com/voxpupuli/puppet-pkgng/pull/115) ([smortex](https://github.com/smortex))
+- Add support for Puppet 7 [\#113](https://github.com/voxpupuli/puppet-pkgng/pull/113) ([smortex](https://github.com/smortex))
+
+**Closed issues:**
+
+- Allow modifying / disabling repos in /etc [\#105](https://github.com/voxpupuli/puppet-pkgng/issues/105)
+
+**Merged pull requests:**
+
+- puppet-lint: fix top\_scope\_facts warnings [\#109](https://github.com/voxpupuli/puppet-pkgng/pull/109) ([bastelfreak](https://github.com/bastelfreak))
+- Allow stdlib 8.0.0 [\#108](https://github.com/voxpupuli/puppet-pkgng/pull/108) ([smortex](https://github.com/smortex))
+- Fix reference to which module to install [\#104](https://github.com/voxpupuli/puppet-pkgng/pull/104) ([igalic](https://github.com/igalic))
+- modulesync 3.0.0 & puppet-lint updates [\#102](https://github.com/voxpupuli/puppet-pkgng/pull/102) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v2.4.0](https://github.com/voxpupuli/puppet-pkgng/tree/v2.4.0) (2020-05-27)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-pkgng/compare/2.3.0...v2.4.0)
