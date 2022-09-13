@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'pkg_has_vulnerabilities fact' do
@@ -29,6 +31,7 @@ describe 'pkg_has_vulnerabilities fact' do
 
       it { is_expected.to be false }
     end
+
     context 'with package vulnerabilities' do
       let(:pkg_audit_output) { "apr-1.6.2.1.6.0\napache24-2.4.27\n" }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 pkg_package_updates = []
 pkg_package_vulnerables = []
 
@@ -6,11 +8,9 @@ Facter.add('pkg_has_updates') do
   setcode do
     if File.executable?('/usr/sbin/pkg')
       pkg_version_result = Facter::Util::Resolution.exec('/usr/sbin/pkg version -RUql"<"')
-      unless pkg_version_result.nil?
-        pkg_version_result.each_line do |line|
-          package = line.split.first
-          pkg_package_updates.push(package)
-        end
+      pkg_version_result&.each_line do |line|
+        package = line.split.first
+        pkg_package_updates.push(package)
       end
     end
 
@@ -39,9 +39,7 @@ end
 Facter.add('pkg_has_vulnerabilities') do
   confine osfamily: 'FreeBSD'
   setcode do
-    if File.executable?('/usr/sbin/pkg')
-      pkg_package_vulnerables = Facter::Util::Resolution.exec('/usr/sbin/pkg audit -q').split.map(&:chomp)
-    end
+    pkg_package_vulnerables = Facter::Util::Resolution.exec('/usr/sbin/pkg audit -q').split.map(&:chomp) if File.executable?('/usr/sbin/pkg')
 
     pkg_package_vulnerables.any?
   end

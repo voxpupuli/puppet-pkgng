@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'pkgng::repo' do
@@ -54,7 +56,7 @@ describe 'pkgng::repo' do
 
         it do
           is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-            content: %r{^\s+pubkey:\s+"\/path\/to\/pubkey",$}
+            content: %r{^\s+pubkey:\s+"/path/to/pubkey",$}
           )
         end
       end
@@ -70,7 +72,7 @@ describe 'pkgng::repo' do
 
         it do
           is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-            content: %r{^\s+fingerprints:\s+"\/path\/to\/fingerprints",$}
+            content: %r{^\s+fingerprints:\s+"/path/to/fingerprints",$}
           )
         end
       end
@@ -101,16 +103,17 @@ describe 'pkgng::repo' do
               end
 
               it { is_expected.to contain_pkgng__repo('pkg.example.com') }
+
               if mirror_type =~ %r{^srv$}
                 it do
                   is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-                    content: %r{\s+url:\s+"pkg\+#{protocol}:\/\/pkg.example.com\/\$\{ABI\}\/latest"}
+                    content: %r{\s+url:\s+"pkg\+#{protocol}://pkg.example.com/\$\{ABI\}/latest"}
                   )
                 end
               else
                 it do
                   is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-                    content: %r{\s+url:\s+"#{protocol}:\/\/pkg.example.com\/\$\{ABI\}\/latest"}
+                    content: %r{\s+url:\s+"#{protocol}://pkg.example.com/\$\{ABI\}/latest"}
                   )
                 end
               end
