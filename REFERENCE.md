@@ -7,11 +7,10 @@
 ### Classes
 
 * [`pkgng`](#pkgng): This configures the PkgNG Package manager on FreeBSD systems, and adds support for managing packages with Puppet.  This will eventually be in
-* [`pkgng::params`](#pkgngparams): Class: pkgng::params  Set some defaults
 
 ### Defined types
 
-* [`pkgng::repo`](#pkgngrepo): This configures a single PkgNG repository. Instead of defining the repo with the repo URL, we split it up in hostname, mirror_type, protocol 
+* [`pkgng::repo`](#pkgng--repo): This configures a single PkgNG repository. Instead of defining the repo with the repo URL, we split it up in hostname, mirror_type, protocol 
 
 ## Classes
 
@@ -41,38 +40,38 @@ include pkgng
 
 The following parameters are available in the `pkgng` class:
 
-* [`pkg_dbdir`](#pkg_dbdir)
-* [`pkg_cachedir`](#pkg_cachedir)
-* [`portsdir`](#portsdir)
-* [`options`](#options)
-* [`purge_repos_d`](#purge_repos_d)
-* [`repos`](#repos)
+* [`pkg_dbdir`](#-pkgng--pkg_dbdir)
+* [`pkg_cachedir`](#-pkgng--pkg_cachedir)
+* [`portsdir`](#-pkgng--portsdir)
+* [`options`](#-pkgng--options)
+* [`purge_repos_d`](#-pkgng--purge_repos_d)
+* [`repos`](#-pkgng--repos)
 
-##### <a name="pkg_dbdir"></a>`pkg_dbdir`
+##### <a name="-pkgng--pkg_dbdir"></a>`pkg_dbdir`
 
 Data type: `Stdlib::Absolutepath`
 
 Full path to database directory for pkg(8)
 
-Default value: `$pkgng::params::pkg_dbdir`
+Default value: `'/var/db/pkg'`
 
-##### <a name="pkg_cachedir"></a>`pkg_cachedir`
+##### <a name="-pkgng--pkg_cachedir"></a>`pkg_cachedir`
 
 Data type: `Stdlib::Absolutepath`
 
 Full path to cache directory for pkg(8)
 
-Default value: `$pkgng::params::pkg_cachedir`
+Default value: `'/var/cache/pkg'`
 
-##### <a name="portsdir"></a>`portsdir`
+##### <a name="-pkgng--portsdir"></a>`portsdir`
 
 Data type: `Stdlib::Absolutepath`
 
 Full path to ports directory
 
-Default value: `$pkgng::params::portsdir`
+Default value: `'/usr/ports'`
 
-##### <a name="options"></a>`options`
+##### <a name="-pkgng--options"></a>`options`
 
 Data type: `Array[String]`
 
@@ -80,15 +79,15 @@ Array of options to write to pkg.conf(5)
 
 Default value: `[]`
 
-##### <a name="purge_repos_d"></a>`purge_repos_d`
+##### <a name="-pkgng--purge_repos_d"></a>`purge_repos_d`
 
 Data type: `Boolean`
 
 Boolean when true removes unmanaged repos
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="repos"></a>`repos`
+##### <a name="-pkgng--repos"></a>`repos`
 
 Data type: `Hash`
 
@@ -96,15 +95,9 @@ Hash of resources to pass to create_resources()
 
 Default value: `{}`
 
-### <a name="pkgngparams"></a>`pkgng::params`
-
-Class: pkgng::params
-
-Set some defaults
-
 ## Defined types
 
-### <a name="pkgngrepo"></a>`pkgng::repo`
+### <a name="pkgng--repo"></a>`pkgng::repo`
 
 This configures a single PkgNG repository. Instead of defining the repo
 with the repo URL, we split it up in hostname, mirror_type, protocol and
@@ -123,16 +116,16 @@ pkg::repo { 'pkg.example.com': }
 
 The following parameters are available in the `pkgng::repo` defined type:
 
-* [`packagehost`](#packagehost)
-* [`protocol`](#protocol)
-* [`mirror_type`](#mirror_type)
-* [`repopath`](#repopath)
-* [`enabled`](#enabled)
-* [`priority`](#priority)
-* [`pubkey`](#pubkey)
-* [`fingerprints`](#fingerprints)
+* [`packagehost`](#-pkgng--repo--packagehost)
+* [`protocol`](#-pkgng--repo--protocol)
+* [`mirror_type`](#-pkgng--repo--mirror_type)
+* [`repopath`](#-pkgng--repo--repopath)
+* [`enabled`](#-pkgng--repo--enabled)
+* [`priority`](#-pkgng--repo--priority)
+* [`pubkey`](#-pkgng--repo--pubkey)
+* [`fingerprints`](#-pkgng--repo--fingerprints)
 
-##### <a name="packagehost"></a>`packagehost`
+##### <a name="-pkgng--repo--packagehost"></a>`packagehost`
 
 Data type: `String`
 
@@ -140,7 +133,7 @@ String host address of the server
 
 Default value: `$name`
 
-##### <a name="protocol"></a>`protocol`
+##### <a name="-pkgng--repo--protocol"></a>`protocol`
 
 Data type: `Enum['file', 'ftp', 'http', 'https', 'ssh']`
 
@@ -148,7 +141,7 @@ String Transport for repo, from http, https, ftp, file or ssh
 
 Default value: `'http'`
 
-##### <a name="mirror_type"></a>`mirror_type`
+##### <a name="-pkgng--repo--mirror_type"></a>`mirror_type`
 
 Data type: `Enum['srv', 'http']`
 
@@ -156,7 +149,7 @@ String of srv or http
 
 Default value: `'srv'`
 
-##### <a name="repopath"></a>`repopath`
+##### <a name="-pkgng--repo--repopath"></a>`repopath`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -164,15 +157,15 @@ Path at packagehost url server beginning with /
 
 Default value: `'/${ABI}/latest'`
 
-##### <a name="enabled"></a>`enabled`
+##### <a name="-pkgng--repo--enabled"></a>`enabled`
 
 Data type: `Boolean`
 
 Boolean to enable or disable the repository
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="priority"></a>`priority`
+##### <a name="-pkgng--repo--priority"></a>`priority`
 
 Data type: `Integer[0,100]`
 
@@ -180,19 +173,19 @@ Interger specifying the order of precedence in multi-repo
 
 Default value: `0`
 
-##### <a name="pubkey"></a>`pubkey`
+##### <a name="-pkgng--repo--pubkey"></a>`pubkey`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 String containing the full path to the public key to use
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="fingerprints"></a>`fingerprints`
+##### <a name="-pkgng--repo--fingerprints"></a>`fingerprints`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 String containingthe full path to file containing valid fingerprints, see pkg.conf(8)
 
-Default value: ``undef``
+Default value: `undef`
 
