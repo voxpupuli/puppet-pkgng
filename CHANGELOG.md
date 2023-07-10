@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.0](https://github.com/voxpupuli/puppet-pkgng/tree/v4.0.0) (2023-07-10)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-pkgng/compare/v3.0.0...v4.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 6 support [\#121](https://github.com/voxpupuli/puppet-pkgng/pull/121) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add support for Puppet 8 [\#124](https://github.com/voxpupuli/puppet-pkgng/pull/124) ([smortex](https://github.com/smortex))
+- Relax dependencies version requirements [\#123](https://github.com/voxpupuli/puppet-pkgng/pull/123) ([smortex](https://github.com/smortex))
+- Remove legacy `params.pp` [\#119](https://github.com/voxpupuli/puppet-pkgng/pull/119) ([smortex](https://github.com/smortex))
+
 ## [v3.0.0](https://github.com/voxpupuli/puppet-pkgng/tree/v3.0.0) (2022-09-13)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-pkgng/compare/v2.4.0...v3.0.0)
@@ -44,8 +58,8 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Update from xaque208 modulesync\_config [\#96](https://github.com/voxpupuli/puppet-pkgng/pull/96) ([xaque208](https://github.com/xaque208))
-- Update from xaque208 modulesync\_config [\#95](https://github.com/voxpupuli/puppet-pkgng/pull/95) ([xaque208](https://github.com/xaque208))
+- Update from xaque208 modulesync\_config [\#96](https://github.com/voxpupuli/puppet-pkgng/pull/96) ([zachfi](https://github.com/zachfi))
+- Update from xaque208 modulesync\_config [\#95](https://github.com/voxpupuli/puppet-pkgng/pull/95) ([zachfi](https://github.com/zachfi))
 
 ## [2.2.1](https://github.com/voxpupuli/puppet-pkgng/tree/2.2.1) (2019-02-28)
 
@@ -53,7 +67,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Update from xaque208 modulesync\_config [\#94](https://github.com/voxpupuli/puppet-pkgng/pull/94) ([xaque208](https://github.com/xaque208))
+- Update from xaque208 modulesync\_config [\#94](https://github.com/voxpupuli/puppet-pkgng/pull/94) ([zachfi](https://github.com/zachfi))
 
 ## [2.2.0](https://github.com/voxpupuli/puppet-pkgng/tree/2.2.0) (2019-02-15)
 
@@ -66,7 +80,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Drop old ruby [\#93](https://github.com/voxpupuli/puppet-pkgng/pull/93) ([xaque208](https://github.com/xaque208))
+- Drop old ruby [\#93](https://github.com/voxpupuli/puppet-pkgng/pull/93) ([zachfi](https://github.com/zachfi))
 - facter: always use the repository as a source of package version [\#92](https://github.com/voxpupuli/puppet-pkgng/pull/92) ([olevole](https://github.com/olevole))
 - Relax dependency on puppetlabs-stdlib [\#90](https://github.com/voxpupuli/puppet-pkgng/pull/90) ([smortex](https://github.com/smortex))
 - Update repos before installing packages [\#88](https://github.com/voxpupuli/puppet-pkgng/pull/88) ([smortex](https://github.com/smortex))
