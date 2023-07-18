@@ -1,0 +1,26 @@
+<|-
+  String[1]                      $name,
+  String[1]                      $packagehost,
+  Pkgng::Protocol                $protocol,
+  Pkgng::Mirror_type             $mirror_type,
+  Stdlib::Absolutepath           $repopath,
+  Boolean                        $enabled,
+  Integer[0,100]                 $priority,
+  Optional[Stdlib::Absolutepath] $pubkey,
+  Optional[Stdlib::Absolutepath] $fingerprints,
+-|>
+# File managed by Puppet
+
+<%= $name -%>: {
+    url:            "<%= if $mirror_type == 'srv' { 'pkg+' } %><%= $protocol %>://<%= $packagehost %><%= $repopath %>",
+    mirror_type:    "<%= $mirror_type %>",
+    enabled:        <%= bool2str($enabled, 'yes', 'no') %>,
+    priority:       <%= $priority %>,
+<%- if $pubkey { -%>
+    signature_type: "pubkey",
+    pubkey:         "<%= $pubkey %>",
+<%- } elsif $fingerprints { -%>
+    signature_type: "fingerprints",
+    fingerprints:   "<%= $fingerprints %>",
+<%- } -%>
+}

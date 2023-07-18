@@ -16,20 +16,30 @@
 # @param fingerprints String containingthe full path to file containing valid fingerprints, see pkg.conf(8)
 #
 define pkgng::repo (
-  String                                      $packagehost    = $name,
-  Enum['file', 'ftp', 'http', 'https', 'ssh'] $protocol       = 'http',
-  Enum['srv', 'http']                         $mirror_type    = 'srv',
-  Stdlib::Absolutepath                        $repopath       = '/${ABI}/latest', # lint:ignore:single_quote_string_with_variables
-  Boolean                                     $enabled        = true,
-  Integer[0,100]                              $priority       = 0,
-  Optional[Stdlib::Absolutepath]              $pubkey         = undef,
-  Optional[Stdlib::Absolutepath]              $fingerprints   = undef,
+  String[1]                      $packagehost    = $name,
+  Pkgng::Protocol                $protocol       = 'http',
+  Pkgng::Mirror_type             $mirror_type    = 'srv',
+  Stdlib::Absolutepath           $repopath       = '/${ABI}/latest', # lint:ignore:single_quote_string_with_variables
+  Boolean                        $enabled        = true,
+  Integer[0,100]                 $priority       = 0,
+  Optional[Stdlib::Absolutepath] $pubkey         = undef,
+  Optional[Stdlib::Absolutepath] $fingerprints   = undef,
 ) {
   include pkgng
 
   # define repository configuration
   file { "/usr/local/etc/pkg/repos/${name}.conf":
-    content => template("${module_name}/repo.erb"),
+    content => epp("${module_name}/repo.epp", {
+        name         => $name,
+        packagehost  => $packagehost,
+        protocol     => $protocol,
+        mirror_type  => $mirror_type,
+        repopath     => $repopath,
+        enabled      => $enabled,
+        priority     => $priority,
+        pubkey       => $pubkey,
+        fingerprints => $fingerprints,
+    }),
     notify  => Exec['pkg update'],
   }
 }
