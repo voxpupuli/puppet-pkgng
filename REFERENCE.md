@@ -24,7 +24,7 @@
 This configures the PkgNG Package manager on FreeBSD systems, and adds
 support for managing packages with Puppet.  This will eventually be in
 mainline FreeBSD, but for now, we are leaving the installation up to the
-adminstrator, since there is no going back.
+administrator, since there is no going back.
 
 If you have purge_repos_d as true - then you'll have no repositories
 defined unless you define one. You want to do this as you'll want this
@@ -80,7 +80,7 @@ Default value: `'/usr/ports'`
 
 Data type: `Array[String]`
 
-Array of options to write to pkg.conf(5)
+Extra options to write to pkg.conf(5)
 
 Default value: `[]`
 
@@ -88,7 +88,7 @@ Default value: `[]`
 
 Data type: `Boolean`
 
-Boolean when true removes unmanaged repos
+Whether unmanaged repositories should be removed
 
 Default value: `true`
 
@@ -96,7 +96,7 @@ Default value: `true`
 
 Data type: `Hash`
 
-Hash of resources to pass to create_resources()
+Repositories to manage using create_resources()
 
 Default value: `{}`
 
@@ -134,7 +134,7 @@ The following parameters are available in the `pkgng::repo` defined type:
 
 Data type: `String[1]`
 
-String host address of the server
+Hostname of the repository
 
 Default value: `$name`
 
@@ -142,7 +142,7 @@ Default value: `$name`
 
 Data type: `Pkgng::Protocol`
 
-String Transport for repo, from http, https, ftp, file or ssh
+Transport used to reach the repository
 
 Default value: `'http'`
 
@@ -150,7 +150,7 @@ Default value: `'http'`
 
 Data type: `Pkgng::Mirror_type`
 
-String of srv or http
+Mirror type of the repository
 
 Default value: `'srv'`
 
@@ -158,7 +158,7 @@ Default value: `'srv'`
 
 Data type: `Stdlib::Absolutepath`
 
-Path at packagehost url server beginning with /
+Path of the repository on packagehost
 
 Default value: `'/${ABI}/latest'`
 
@@ -166,7 +166,7 @@ Default value: `'/${ABI}/latest'`
 
 Data type: `Boolean`
 
-Boolean to enable or disable the repository
+Whether this repository is currently enabled
 
 Default value: `true`
 
@@ -174,7 +174,7 @@ Default value: `true`
 
 Data type: `Integer[0,100]`
 
-Interger specifying the order of precedence in multi-repo
+Priority of the repository
 
 Default value: `0`
 
@@ -182,7 +182,7 @@ Default value: `0`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-String containing the full path to the public key to use
+Path to the file containing  the public key for this repository
 
 Default value: `undef`
 
@@ -190,7 +190,7 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-String containingthe full path to file containing valid fingerprints, see pkg.conf(8)
+Path to the file containing known signatures for the repository
 
 Default value: `undef`
 
@@ -200,7 +200,7 @@ Default value: `undef`
 
 The type of a pkg mirror
 
-Alias of `Enum['http', 'srv']`
+Alias of `Enum['http', 'none', 'srv']`
 
 ### <a name="Pkgng--Protocol"></a>`Pkgng::Protocol`
 
