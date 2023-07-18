@@ -33,7 +33,7 @@ class pkgng (
   }
 
   file { '/usr/local/etc/pkg.conf':
-    content => template('pkgng/pkg.conf'),
+    content => epp('pkgng/pkg.conf.epp'),
     notify  => Exec['pkg update'],
   }
 

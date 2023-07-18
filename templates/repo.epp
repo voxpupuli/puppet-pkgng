@@ -1,0 +1,26 @@
+<|-
+  String[1]                                   $name,
+  String[1]                                   $packagehost,
+  Enum['file', 'ftp', 'http', 'https', 'ssh'] $protocol,
+  Enum['http', 'srv']                         $mirror_type,
+  Stdlib::Absolutepath                        $repopath,
+  Boolean                                     $enabled,
+  Integer[0,100]                              $priority,
+  Optional[Stdlib::Absolutepath]              $pubkey,
+  Optional[Stdlib::Absolutepath]              $fingerprints,
+-|>
+# File managed by Puppet
+
+<%= $name -%>: {
+    url:            "<% if $mirror_type == 'srv' { %>pkg+<% } %><%= $protocol %>://<%= $packagehost %><%= $repopath %>",
+    mirror_type:    "<%= $mirror_type %>",
+    enabled:        <% if $enabled { %>yes<% } else { %>no<% } %>,
+    priority:       <%= $priority %>,
+<%- if $pubkey { -%>
+    signature_type: "pubkey",
+    pubkey:         "<%= $pubkey %>",
+<%- } elsif $fingerprints { -%>
+    signature_type: "fingerprints",
+    fingerprints:   "<%= $fingerprints %>",
+<%- } -%>
+}

@@ -1,9 +1,9 @@
-PKG_DBDIR: <%= @pkg_dbdir %>
-PKG_CACHEDIR: <%= @pkg_cachedir %>
-PORTSDIR: <%= @portsdir %>
-<% @options.each do |o| -%>
-<%= o %>
-<% end -%>
+PKG_DBDIR: <%= $pkgng::pkg_dbdir %>
+PKG_CACHEDIR: <%= $pkgng::pkg_cachedir %>
+PORTSDIR: <%= $pkgng::portsdir %>
+<% $pkgng::options.each |$o| { -%>
+<%= $o %>
+<% } -%>
 
 ALIAS              : {
   all-depends: query %dn-%dv,

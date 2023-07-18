@@ -29,7 +29,17 @@ define pkgng::repo (
 
   # define repository configuration
   file { "/usr/local/etc/pkg/repos/${name}.conf":
-    content => template("${module_name}/repo.erb"),
+    content => epp("${module_name}/repo.epp", {
+        name         => $name,
+        packagehost  => $packagehost,
+        protocol     => $protocol,
+        mirror_type  => $mirror_type,
+        repopath     => $repopath,
+        enabled      => $enabled,
+        priority     => $priority,
+        pubkey       => $pubkey,
+        fingerprints => $fingerprints,
+    }),
     notify  => Exec['pkg update'],
   }
 }
