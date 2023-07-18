@@ -12,6 +12,11 @@
 
 * [`pkgng::repo`](#pkgng--repo): This configures a single PkgNG repository. Instead of defining the repo with the repo URL, we split it up in hostname, mirror_type, protocol 
 
+### Data types
+
+* [`Pkgng::Mirror_type`](#Pkgng--Mirror_type): The type of a pkg mirror
+* [`Pkgng::Protocol`](#Pkgng--Protocol): The protocol for a pkg mirror
+
 ## Classes
 
 ### <a name="pkgng"></a>`pkgng`
@@ -127,7 +132,7 @@ The following parameters are available in the `pkgng::repo` defined type:
 
 ##### <a name="-pkgng--repo--packagehost"></a>`packagehost`
 
-Data type: `String`
+Data type: `String[1]`
 
 String host address of the server
 
@@ -135,7 +140,7 @@ Default value: `$name`
 
 ##### <a name="-pkgng--repo--protocol"></a>`protocol`
 
-Data type: `Enum['file', 'ftp', 'http', 'https', 'ssh']`
+Data type: `Pkgng::Protocol`
 
 String Transport for repo, from http, https, ftp, file or ssh
 
@@ -143,7 +148,7 @@ Default value: `'http'`
 
 ##### <a name="-pkgng--repo--mirror_type"></a>`mirror_type`
 
-Data type: `Enum['srv', 'http']`
+Data type: `Pkgng::Mirror_type`
 
 String of srv or http
 
@@ -188,4 +193,18 @@ Data type: `Optional[Stdlib::Absolutepath]`
 String containingthe full path to file containing valid fingerprints, see pkg.conf(8)
 
 Default value: `undef`
+
+## Data types
+
+### <a name="Pkgng--Mirror_type"></a>`Pkgng::Mirror_type`
+
+The type of a pkg mirror
+
+Alias of `Enum['http', 'srv']`
+
+### <a name="Pkgng--Protocol"></a>`Pkgng::Protocol`
+
+The protocol for a pkg mirror
+
+Alias of `Enum['file', 'ftp', 'http', 'https', 'ssh']`
 
