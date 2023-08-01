@@ -1,7 +1,7 @@
 # This configures the PkgNG Package manager on FreeBSD systems, and adds
 # support for managing packages with Puppet.  This will eventually be in
 # mainline FreeBSD, but for now, we are leaving the installation up to the
-# adminstrator, since there is no going back.
+# administrator, since there is no going back.
 #
 # If you have purge_repos_d as true - then you'll have no repositories
 # defined unless you define one. You want to do this as you'll want this
@@ -16,9 +16,9 @@
 # @param pkg_dbdir Full path to database directory for pkg(8)
 # @param pkg_cachedir Full path to cache directory for pkg(8)
 # @param portsdir Full path to ports directory
-# @param options Array of options to write to pkg.conf(5)
-# @param purge_repos_d Boolean when true removes unmanaged repos
-# @param repos Hash of resources to pass to create_resources()
+# @param options Extra options to write to pkg.conf(5)
+# @param purge_repos_d Whether unmanaged repositories should be removed
+# @param repos Repositories to manage using create_resources()
 #
 class pkgng (
   Stdlib::Absolutepath $pkg_dbdir     = '/var/db/pkg',

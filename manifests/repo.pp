@@ -6,14 +6,14 @@
 # @example to use the class
 #   pkg::repo { 'pkg.example.com': }
 #
-# @param packagehost String host address of the server
-# @param protocol String Transport for repo, from http, https, ftp, file or ssh
-# @param mirror_type String of srv or http
-# @param repopath Path at packagehost url server beginning with /
-# @param enabled Boolean to enable or disable the repository
-# @param priority Interger specifying the order of precedence in multi-repo
-# @param pubkey String containing the full path to the public key to use
-# @param fingerprints String containingthe full path to file containing valid fingerprints, see pkg.conf(8)
+# @param packagehost Hostname of the repository
+# @param protocol Transport used to reach the repository
+# @param mirror_type Mirror type of the repository
+# @param repopath Path of the repository on packagehost
+# @param enabled Whether this repository is currently enabled
+# @param priority Priority of the repository
+# @param pubkey Path to the file containing  the public key for this repository
+# @param fingerprints Path to the file containing known signatures for the repository
 #
 define pkgng::repo (
   String[1]                      $packagehost    = $name,
