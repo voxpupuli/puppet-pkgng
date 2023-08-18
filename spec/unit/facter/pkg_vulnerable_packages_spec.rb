@@ -17,7 +17,7 @@ describe 'pkg_vulnerable_packages fact' do
   context 'when there is no update' do
     let(:pkg_audit_output) { '' }
 
-    it { is_expected.to be nil }
+    it { is_expected.to be_nil }
   end
 
   context 'when there are updates' do
