@@ -17,7 +17,7 @@ describe 'pkg_package_updates fact' do
   context 'when there is no update' do
     let(:pkg_version_output) { '' }
 
-    it { is_expected.to be nil }
+    it { is_expected.to be_nil }
   end
 
   context 'when there are updates' do
