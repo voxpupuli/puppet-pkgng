@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.1.0](https://github.com/voxpupuli/puppet-pkgng/tree/v4.1.0) (2023-11-06)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-pkgng/compare/v4.0.0...v4.1.0)
+
+**Implemented enhancements:**
+
+- Add support for setting `mirror_type` to `none` [\#127](https://github.com/voxpupuli/puppet-pkgng/pull/127) ([smortex](https://github.com/smortex))
+
+**Fixed bugs:**
+
+- Fix EPP syntax error [\#128](https://github.com/voxpupuli/puppet-pkgng/pull/128) ([fraenki](https://github.com/fraenki))
+
+**Merged pull requests:**
+
+- Switch templates to EPP [\#126](https://github.com/voxpupuli/puppet-pkgng/pull/126) ([smortex](https://github.com/smortex))
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-pkgng/tree/v4.0.0) (2023-07-10)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-pkgng/compare/v3.0.0...v4.0.0)
