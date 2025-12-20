@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.0.0](https://github.com/voxpupuli/puppet-pkgng/tree/v5.0.0) (2025-12-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-pkgng/compare/v4.1.0...v5.0.0)
+
+**Breaking changes:**
+
+- Drop puppet, update openvox minimum version to 8.19 [\#147](https://github.com/voxpupuli/puppet-pkgng/pull/147) ([TheMeier](https://github.com/TheMeier))
+
+**Implemented enhancements:**
+
+- metadata.json: Add OpenVox [\#144](https://github.com/voxpupuli/puppet-pkgng/pull/144) ([jstraw](https://github.com/jstraw))
+- Add support for FreeBSD 14 [\#137](https://github.com/voxpupuli/puppet-pkgng/pull/137) ([smortex](https://github.com/smortex))
+
 ## [v4.1.0](https://github.com/voxpupuli/puppet-pkgng/tree/v4.1.0) (2023-11-06)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-pkgng/compare/v4.0.0...v4.1.0)
