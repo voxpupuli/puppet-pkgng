@@ -1,6 +1,6 @@
 # Puppet-pkgng
 
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-pkgng.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-pkgng)
+![Build Status](https://github.com/voxpupuli/puppet-pkgng/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/pkgng.svg)](https://forge.puppetlabs.com/puppet/pkgng)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/pkgng.svg)](https://forge.puppetlabs.com/puppet/pkgng)
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/pkgng.svg)](https://forge.puppetlabs.com/puppet/pkgng)
