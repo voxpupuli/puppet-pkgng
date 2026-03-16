@@ -32,7 +32,7 @@ describe 'pkgng::repo' do
 
         it do
           is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-            content: %r{\s+priority:\s+12,$}
+            content: %r{\s+priority:\s+12,$},
           )
         end
       end
@@ -50,13 +50,13 @@ describe 'pkgng::repo' do
 
         it do
           is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-            content: %r{^\s+signature_type:\s+"pubkey",$}
+            content: %r{^\s+signature_type:\s+"pubkey",$},
           )
         end
 
         it do
           is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-            content: %r{^\s+pubkey:\s+"/path/to/pubkey",$}
+            content: %r{^\s+pubkey:\s+"/path/to/pubkey",$},
           )
         end
       end
@@ -66,13 +66,13 @@ describe 'pkgng::repo' do
 
         it do
           is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-            content: %r{^\s+signature_type:\s+"fingerprints",$}
+            content: %r{^\s+signature_type:\s+"fingerprints",$},
           )
         end
 
         it do
           is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-            content: %r{^\s+fingerprints:\s+"/path/to/fingerprints",$}
+            content: %r{^\s+fingerprints:\s+"/path/to/fingerprints",$},
           )
         end
       end
@@ -88,7 +88,7 @@ describe 'pkgng::repo' do
         'srv' => %w[
           http
           https
-        ]
+        ],
       }.each do |k, v|
         mirror_type = k
         context "mirror_type => #{mirror_type}" do
@@ -98,7 +98,7 @@ describe 'pkgng::repo' do
               let(:params) do
                 {
                   protocol: protocol.to_s,
-                  mirror_type: mirror_type
+                  mirror_type: mirror_type,
                 }
               end
 
@@ -107,13 +107,13 @@ describe 'pkgng::repo' do
               if mirror_type =~ %r{^srv$}
                 it do
                   is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-                    content: %r{\s+url:\s+"pkg\+#{protocol}://pkg.example.com/\$\{ABI\}/latest"}
+                    content: %r{\s+url:\s+"pkg\+#{protocol}://pkg.example.com/\$\{ABI\}/latest"},
                   )
                 end
               else
                 it do
                   is_expected.to contain_file('/usr/local/etc/pkg/repos/pkg.example.com.conf').with(
-                    content: %r{\s+url:\s+"#{protocol}://pkg.example.com/\$\{ABI\}/latest"}
+                    content: %r{\s+url:\s+"#{protocol}://pkg.example.com/\$\{ABI\}/latest"},
                   )
                 end
               end
