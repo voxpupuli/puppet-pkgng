@@ -11,7 +11,7 @@ describe 'pkg_package_updates fact' do
     allow(File).to receive(:executable?).and_return(false)
     allow(File).to receive(:executable?).with('/usr/sbin/pkg').and_return(true)
     allow(Facter.fact(:osfamily)).to receive(:value).and_return('FreeBSD')
-    allow(Facter::Util::Resolution).to receive(:exec).with('/usr/sbin/pkg version -RUql"<"').and_return(pkg_version_output)
+    allow(Facter::Core::Execution).to receive(:execute).with('/usr/sbin/pkg version -RUql"<"').and_return(pkg_version_output)
   end
 
   context 'when there is no update' do

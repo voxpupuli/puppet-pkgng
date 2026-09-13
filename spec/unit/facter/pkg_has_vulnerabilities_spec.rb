@@ -23,7 +23,7 @@ describe 'pkg_has_vulnerabilities fact' do
     before do
       allow(File).to receive(:executable?).and_return(false)
       allow(File).to receive(:executable?).with('/usr/sbin/pkg').and_return(true)
-      allow(Facter::Util::Resolution).to receive(:exec).with('/usr/sbin/pkg audit -q').and_return(pkg_audit_output)
+      allow(Facter::Core::Execution).to receive(:execute).with('/usr/sbin/pkg audit -q').and_return(pkg_audit_output)
     end
 
     context 'without package vulnerabilities' do
