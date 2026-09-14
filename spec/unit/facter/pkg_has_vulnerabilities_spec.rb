@@ -8,17 +8,17 @@ describe 'pkg_has_vulnerabilities fact' do
   after { Facter.clear }
 
   before do
-    allow(Facter.fact(:osfamily)).to receive(:value).and_return(osfamily)
+    allow(Facter.fact('os.family')).to receive(:value).and_return(family)
   end
 
   context 'on non FreeBSD host' do
-    let(:osfamily) { 'Debian' }
+    let(:family) { 'Debian' }
 
     it { is_expected.to be_nil }
   end
 
   context 'on FreeBSD host' do
-    let(:osfamily) { 'FreeBSD' }
+    let(:family) { 'FreeBSD' }
 
     before do
       allow(File).to receive(:executable?).and_return(false)

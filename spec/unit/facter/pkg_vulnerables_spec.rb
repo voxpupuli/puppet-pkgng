@@ -10,7 +10,7 @@ describe 'pkg_vulnerabilities fact' do
   before do
     allow(File).to receive(:executable?).and_return(false)
     allow(File).to receive(:executable?).with('/usr/sbin/pkg').and_return(true)
-    allow(Facter.fact(:osfamily)).to receive(:value).and_return('FreeBSD')
+    allow(Facter.fact('os.family')).to receive(:value).and_return('FreeBSD')
     allow(Facter::Core::Execution).to receive(:execute).with('/usr/sbin/pkg audit -q').and_return(pkg_audit_output)
   end
 
