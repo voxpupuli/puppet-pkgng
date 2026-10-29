@@ -10,7 +10,7 @@
 
 ### Defined types
 
-* [`pkgng::repo`](#pkgng--repo): This configures a single PkgNG repository. Instead of defining the repo with the repo URL, we split it up in hostname, mirror_type, protocol 
+* [`pkgng::repo`](#pkgng--repo): This configures a single PkgNG repository. Instead of defining the repo with the repo URL, we split it up in hostname, mirror_type, protocol
 
 ### Data types
 
@@ -35,7 +35,7 @@ make -C /usr/ports/ports-mgmg/pkg install clean
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 include pkgng
@@ -207,4 +207,3 @@ Alias of `Enum['http', 'none', 'srv']`
 The protocol for a pkg mirror
 
 Alias of `Enum['file', 'ftp', 'http', 'https', 'ssh']`
-
